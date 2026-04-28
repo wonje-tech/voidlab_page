@@ -386,6 +386,44 @@
     /* ── FOOTER ── */
     footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; color: var(--text-dim); font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; }
 
+    /* ── IMAGE LIGHTBOX ── */
+    .lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 40px; }
+    .lightbox.open { display: flex; }
+    .lightbox-inner { position: relative; max-width: 900px; max-height: 85vh; width: 100%; }
+    .lightbox-inner img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; display: block; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+    .lightbox-close { position: absolute; top: -16px; right: -16px; width: 36px; height: 36px; border-radius: 50%; background: white; border: none; cursor: pointer; font-size: 18px; color: var(--text); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); transition: transform 0.2s; }
+    .lightbox-close:hover { transform: scale(1.1); }
+    .pub-thumb { cursor: zoom-in; }
+    .pub-thumb img { transition: opacity 0.2s; }
+    .pub-thumb:hover img { opacity: 0.85; }
+
+    /* ── RESEARCH MODAL ── */
+    .research-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 40px; }
+    .research-modal.open { display: flex; }
+    .research-modal-box { background: white; border-radius: 20px; max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.2); animation: modalIn 0.25s ease; }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: none; } }
+    .research-modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 32px 32px 0; }
+    .research-modal-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+    .research-modal-close { background: none; border: none; cursor: pointer; font-size: 20px; color: var(--text-dim); line-height: 1; padding: 4px; border-radius: 6px; transition: background 0.2s; flex-shrink: 0; margin-top: 2px; }
+    .research-modal-close:hover { background: var(--bg2); color: var(--text); }
+    .research-modal-body { padding: 20px 32px 32px; }
+    .research-modal-title { font-family: var(--display); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .research-modal-subtitle { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0; }
+    /* 이중언어 레이아웃 */
+    .rm-lang-section { padding: 0; }
+    .rm-lang-label { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.15em; color: var(--accent); background: var(--accent-bg); border: 1px solid rgba(29,78,216,0.2); display: inline-block; padding: 3px 10px; border-radius: 100px; margin-bottom: 10px; margin-top: 20px; }
+    .rm-divider { border: none; border-top: 1px solid var(--border); margin: 4px 0 0; }
+    .research-modal-desc { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin-bottom: 14px; }
+    .research-modal-topics { display: flex; flex-direction: column; gap: 8px; }
+    .research-topic-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; background: var(--bg2); border-radius: 10px; border: 1px solid var(--border); }
+    .research-topic-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 7px; }
+    .research-topic-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .research-topic-text strong { color: var(--text); font-weight: 600; }
+    /* research card hover hint */
+    .research-card { cursor: pointer; }
+    .research-card::after { content: 'Click to learn more →'; position: absolute; bottom: 14px; right: 18px; font-family: var(--mono); font-size: 10px; color: var(--accent); opacity: 0; transition: opacity 0.2s; }
+    .research-card:hover::after { opacity: 1; }
+
     /* ── ANIMATION ── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -895,8 +933,20 @@
         <button class="research-modal-close" onclick="closeResearch()">✕</button>
       </div>
       <div class="research-modal-body">
-        <div class="research-modal-desc" id="rm-desc"></div>
-        <div class="research-modal-topics" id="rm-topics"></div>
+        <!-- 영어 영역 -->
+        <div class="rm-lang-section">
+          <div class="rm-lang-label">EN</div>
+          <div class="research-modal-desc" id="rm-desc-en"></div>
+          <div class="research-modal-topics" id="rm-topics-en"></div>
+        </div>
+        <!-- 구분선 -->
+        <div class="rm-divider"></div>
+        <!-- 한글 영역 -->
+        <div class="rm-lang-section">
+          <div class="rm-lang-label">KR</div>
+          <div class="research-modal-desc" id="rm-desc-kr"></div>
+          <div class="research-modal-topics" id="rm-topics-kr"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -929,73 +979,121 @@
       }
     }
 
-    // ── Research Modal Data ──
+    // ── Research Modal Data (Bilingual EN / KR) ──
     const researchData = {
       autonomous: {
-        icon: '🚗', title: 'Autonomous Driving Systems',
-        subtitle: 'Perception · Planning · Control',
-        desc: 'We develop end-to-end intelligent systems for autonomous mobility. Our research spans the full stack — from real-time sensor processing to high-level decision making — with a focus on safety, robustness, and scalability in complex urban environments.',
-        topics: [
-          { title: 'End-to-End Perception Pipeline', desc: 'Integrating camera and LiDAR inputs to detect, classify, and track objects in real time for safe navigation.' },
-          { title: 'Motion Planning & Prediction', desc: 'Predicting the future trajectories of surrounding vehicles and pedestrians to plan safe, efficient routes.' },
-          { title: 'Smart Mobility Integration', desc: 'Applying autonomous driving technologies to urban mobility systems including delivery robots and campus vehicles.' },
-          { title: 'Safety-Critical System Design', desc: 'Designing fail-safe mechanisms and redundancy strategies for autonomous systems operating in public spaces.' },
-        ]
+        icon: '🚗', title: 'Autonomous Driving Systems', subtitle: 'Perception · Planning · Control',
+        en: {
+          desc: 'We develop end-to-end intelligent systems for autonomous mobility, covering the full stack from real-time sensor processing to high-level decision making.',
+          topics: [
+            { title: 'End-to-End Perception', desc: 'Detecting, classifying, and tracking objects in real time using camera and LiDAR inputs.' },
+            { title: 'Motion Planning & Prediction', desc: 'Predicting trajectories of surrounding agents to plan safe, efficient routes.' },
+            { title: 'Safety-Critical System Design', desc: 'Designing fail-safe mechanisms and redundancy strategies for autonomous systems in public spaces.' },
+          ]
+        },
+        kr: {
+          desc: '자율 주행 모빌리티를 위한 엔드-투-엔드 지능형 시스템을 연구합니다. 실시간 센서 처리부터 고수준 의사결정까지 전체 스택을 다룹니다.',
+          topics: [
+            { title: '통합 인지 파이프라인', desc: '카메라와 라이다 데이터를 활용한 실시간 객체 감지, 분류, 추적 시스템 개발.' },
+            { title: '경로 계획 및 예측', desc: '주변 에이전트의 미래 궤적을 예측하여 안전하고 효율적인 경로를 계획.' },
+            { title: '안전 중심 시스템 설계', desc: '공공 환경에서 운영되는 자율 시스템을 위한 안전 장치 및 이중화 전략 설계.' },
+          ]
+        }
       },
       vision: {
-        icon: '👁️', title: '2D & 3D Computer Vision',
-        subtitle: 'Detection · Segmentation · Tracking',
-        desc: 'Our computer vision research focuses on deep learning-based methods for understanding complex driving scenes from both 2D image and 3D point cloud perspectives.',
-        topics: [
-          { title: 'Object Detection & Classification', desc: 'Real-time detection of vehicles, pedestrians, cyclists, and other road users using state-of-the-art deep neural networks.' },
-          { title: '3D LiDAR Point Cloud Processing', desc: 'Efficient algorithms for ground filtering, clustering, and classification of 3D point cloud data from LiDAR sensors.' },
-          { title: 'Semantic Segmentation', desc: 'Pixel-level and point-level scene understanding for road surface, lane markings, and drivable region extraction.' },
-          { title: 'Multi-Object Tracking', desc: 'Graph-based and filter-based methods for maintaining consistent identities of moving objects across frames.' },
-        ]
+        icon: '👁️', title: '2D & 3D Computer Vision', subtitle: 'Detection · Segmentation · Tracking',
+        en: {
+          desc: 'Deep learning-based scene understanding from both 2D image and 3D point cloud perspectives, enabling comprehensive perception for autonomous vehicles.',
+          topics: [
+            { title: 'Object Detection & Classification', desc: 'Real-time detection of vehicles, pedestrians, and road users using deep neural networks.' },
+            { title: '3D LiDAR Point Cloud Processing', desc: 'Efficient ground filtering, clustering, and classification of 3D sensor data.' },
+            { title: 'Semantic Segmentation & Tracking', desc: 'Pixel/point-level scene understanding and consistent multi-object tracking across frames.' },
+          ]
+        },
+        kr: {
+          desc: '딥러닝 기반의 2D 이미지 및 3D 포인트 클라우드 씬 이해 연구로, 자율주행 차량의 포괄적인 인지 능력을 구현합니다.',
+          topics: [
+            { title: '객체 감지 및 분류', desc: '최신 딥러닝 모델을 활용한 차량, 보행자, 도로 이용자 실시간 감지.' },
+            { title: '3D 라이다 포인트 클라우드 처리', desc: '지면 필터링, 클러스터링, 분류를 포함한 효율적인 3D 센서 데이터 처리.' },
+            { title: '시맨틱 분할 및 추적', desc: '픽셀/포인트 수준의 씬 이해와 프레임 간 일관적인 다중 객체 추적.' },
+          ]
+        }
       },
       fusion: {
-        icon: '📡', title: 'Multi-modal Sensor Fusion',
-        subtitle: 'Camera · LiDAR · Radar',
-        desc: 'We develop robust perception systems that combine complementary sensor modalities — enabling reliable operation in challenging weather and lighting conditions where any single sensor would fail.',
-        topics: [
-          { title: 'Camera-LiDAR Fusion', desc: 'Combining the rich texture of cameras with the precise depth of LiDAR for comprehensive 3D scene understanding.' },
-          { title: 'Transformer-based Fusion', desc: 'Using attention mechanisms to adaptively weight and integrate features from heterogeneous sensor inputs.' },
-          { title: 'Weather-Robust Perception', desc: 'Developing models that maintain reliable performance under rain, fog, and low-light conditions.' },
-          { title: 'Sensor Blockage Detection', desc: 'Automatic detection and recovery when sensors are partially or fully obstructed.' },
-        ]
+        icon: '📡', title: 'Multi-modal Sensor Fusion', subtitle: 'Camera · LiDAR · Radar',
+        en: {
+          desc: 'We combine complementary sensor modalities to build robust perception pipelines that remain reliable in challenging weather and lighting conditions.',
+          topics: [
+            { title: 'Camera-LiDAR Fusion', desc: 'Merging image texture with precise LiDAR depth for comprehensive 3D scene understanding.' },
+            { title: 'Transformer-based Fusion', desc: 'Attention mechanisms to adaptively integrate heterogeneous sensor features.' },
+            { title: 'Weather-Robust Perception', desc: 'Maintaining reliable performance under rain, fog, and low-light conditions.' },
+          ]
+        },
+        kr: {
+          desc: '상호 보완적인 센서 모달리티를 결합하여 악천후 및 저조도 환경에서도 신뢰할 수 있는 인지 파이프라인을 구축합니다.',
+          topics: [
+            { title: '카메라-라이다 융합', desc: '이미지의 풍부한 텍스처와 라이다의 정밀한 깊이 정보를 결합한 3D 씬 이해.' },
+            { title: '트랜스포머 기반 융합', desc: '어텐션 메커니즘을 활용해 이질적인 센서 특징을 적응적으로 통합.' },
+            { title: '악천후 강건 인지', desc: '비, 안개, 야간 등 열악한 환경에서도 안정적인 성능을 유지하는 모델 개발.' },
+          ]
+        }
       },
       hdmap: {
-        icon: '🗺️', title: 'HD Map & SLAM',
-        subtitle: 'Mapping · Localization · Navigation',
-        desc: 'High-definition maps are the backbone of autonomous driving. We build automated pipelines to construct and maintain centimeter-accurate HD maps using cameras and LiDAR, enabling precise vehicle localization and navigation.',
-        topics: [
-          { title: 'Lane-Level Road Marking Mapping', desc: 'Automatically extracting and geo-referencing lane markings, arrows, and road symbols from driving video using deep learning segmentation.' },
-          { title: 'Graph-Based SLAM', desc: 'Building globally consistent maps by detecting loop closures and optimizing pose graphs from camera and wheel encoder data.' },
-          { title: 'Drivable Region Completion', desc: 'Completing missing or occluded drivable regions in 3D LiDAR scans to create complete and reliable road maps.' },
-          { title: 'Vector Map Construction', desc: 'Converting raw sensor data into structured, semantic vector maps compatible with autonomous driving stacks.' },
-        ]
+        icon: '🗺️', title: 'HD Map & SLAM', subtitle: 'Mapping · Localization · Navigation',
+        en: {
+          desc: 'We build automated pipelines to construct centimeter-accurate HD maps using cameras and LiDAR, enabling precise vehicle localization and navigation.',
+          topics: [
+            { title: 'Lane-Level Road Marking Mapping', desc: 'Extracting and geo-referencing lane markings and road symbols from driving video.' },
+            { title: 'Graph-Based SLAM', desc: 'Building globally consistent maps via loop closure detection and pose graph optimization.' },
+            { title: 'Drivable Region Completion', desc: 'Completing occluded drivable regions in 3D LiDAR scans for complete, reliable road maps.' },
+          ]
+        },
+        kr: {
+          desc: '카메라와 라이다를 활용해 센티미터 수준의 정밀 HD 맵을 자동으로 구축하는 파이프라인을 연구합니다.',
+          topics: [
+            { title: '차선 수준 노면 표시 지도 구축', desc: '주행 영상에서 차선, 화살표, 노면 기호를 자동으로 추출하고 지리 좌표로 변환.' },
+            { title: '그래프 기반 SLAM', desc: '루프 폐쇄 감지 및 포즈 그래프 최적화를 통한 전역적으로 일관된 지도 구축.' },
+            { title: '주행 가능 영역 완성', desc: '라이다 스캔에서 누락된 주행 가능 영역을 완성하여 신뢰할 수 있는 도로 지도 생성.' },
+          ]
+        }
       },
       vlm: {
-        icon: '🧠', title: 'Vision-Language Models',
-        subtitle: 'VLM · Reasoning · Scene Understanding',
-        desc: 'We leverage the reasoning capabilities of large vision-language models to enhance autonomous driving — enabling systems to understand complex scenes, reason about pedestrian intent, and build semantically rich maps.',
-        topics: [
-          { title: 'Pedestrian Attention Estimation', desc: 'Using latent diffusion and VLM-based reasoning to infer whether pedestrians are paying attention to traffic, for safer collision avoidance.' },
-          { title: 'Reasoning-based HD Map Construction', desc: 'Applying VLMs to reason about road scene semantics and generate richer, context-aware autonomous driving maps.' },
-          { title: 'Scene Description & Understanding', desc: 'Generating natural language descriptions of driving scenarios to improve human-machine interaction and data annotation.' },
-          { title: 'Pedestrian Safety Analysis', desc: 'Building safety-critical systems that assess pedestrian risk levels using visual and contextual reasoning.' },
-        ]
+        icon: '🧠', title: 'Vision-Language Models', subtitle: 'VLM · Reasoning · Scene Understanding',
+        en: {
+          desc: 'We leverage large vision-language models to enable autonomous systems to understand complex scenes, reason about pedestrian intent, and build semantically rich maps.',
+          topics: [
+            { title: 'Pedestrian Attention Estimation', desc: 'Inferring whether pedestrians are paying attention to traffic using latent diffusion and VLM reasoning.' },
+            { title: 'Reasoning-based HD Map Construction', desc: 'Applying VLMs to generate richer, context-aware autonomous driving maps.' },
+            { title: 'Pedestrian Safety Analysis', desc: 'Assessing pedestrian risk levels using visual and contextual reasoning for collision avoidance.' },
+          ]
+        },
+        kr: {
+          desc: '대규모 비전-언어 모델의 추론 능력을 활용해 자율주행 시스템이 복잡한 씬을 이해하고 보행자 의도를 파악하도록 합니다.',
+          topics: [
+            { title: '보행자 관심 추정', desc: '잠재 확산 모델과 VLM 추론을 통해 보행자의 교통 주의 여부를 판단.' },
+            { title: '추론 기반 HD 맵 구축', desc: 'VLM을 적용해 더욱 풍부한 문맥 인식 자율주행 지도를 생성.' },
+            { title: '보행자 안전 분석', desc: '시각적·문맥적 추론을 통해 보행자 위험 수준을 평가하고 충돌을 방지.' },
+          ]
+        }
       },
       data: {
-        icon: '🔧', title: 'Data Generation & Refinement',
-        subtitle: 'Diffusion · Synthesis · Curation',
-        desc: 'High-quality labeled data is a fundamental bottleneck for autonomous driving AI. We develop methods to generate, augment, and refine training datasets using generative models and automated pipelines.',
-        topics: [
-          { title: 'Latent Diffusion-Based Synthesis', desc: 'Generating realistic synthetic training images of pedestrians and driving scenes using latent diffusion models.' },
-          { title: 'Domain Adaptation', desc: 'Bridging the gap between synthetic and real-world data distributions to improve model generalization.' },
-          { title: 'Automated Data Labeling', desc: 'Semi-automatic annotation pipelines that reduce the cost and time of creating ground-truth labels for perception tasks.' },
-          { title: 'Dataset Curation & Quality Control', desc: 'Methods for filtering, balancing, and verifying large-scale autonomous driving datasets to improve training efficiency.' },
-        ]
+        icon: '🔧', title: 'Data Generation & Refinement', subtitle: 'Diffusion · Synthesis · Curation',
+        en: {
+          desc: 'We develop methods to generate, augment, and refine training datasets using generative models and automated pipelines to overcome data scarcity in autonomous driving.',
+          topics: [
+            { title: 'Latent Diffusion-Based Synthesis', desc: 'Generating realistic synthetic training images of pedestrians and driving scenes.' },
+            { title: 'Domain Adaptation', desc: 'Bridging the gap between synthetic and real-world data to improve model generalization.' },
+            { title: 'Dataset Curation & Quality Control', desc: 'Filtering, balancing, and verifying large-scale datasets to improve training efficiency.' },
+          ]
+        },
+        kr: {
+          desc: '자율주행 AI의 데이터 부족 문제를 극복하기 위해 생성 모델과 자동화 파이프라인을 활용한 데이터 생성·정제 방법을 연구합니다.',
+          topics: [
+            { title: '잠재 확산 기반 데이터 생성', desc: '잠재 확산 모델을 활용해 보행자와 주행 씬의 현실적인 합성 학습 데이터 생성.' },
+            { title: '도메인 적응', desc: '합성 데이터와 실제 데이터의 분포 차이를 줄여 모델의 일반화 성능 향상.' },
+            { title: '데이터셋 정제 및 품질 관리', desc: '대규모 데이터셋의 필터링, 균형 조정, 검증을 통한 학습 효율성 개선.' },
+          ]
+        }
       }
     };
 
@@ -1004,12 +1102,15 @@
       document.getElementById('rm-icon').textContent = d.icon;
       document.getElementById('rm-title').textContent = d.title;
       document.getElementById('rm-subtitle').textContent = d.subtitle;
-      document.getElementById('rm-desc').textContent = d.desc;
-      document.getElementById('rm-topics').innerHTML = d.topics.map(t =>
-        `<div class="research-topic-item">
-          <div class="research-topic-dot"></div>
-          <div class="research-topic-text"><strong>${t.title}</strong><br/>${t.desc}</div>
-        </div>`
+      // EN
+      document.getElementById('rm-desc-en').textContent = d.en.desc;
+      document.getElementById('rm-topics-en').innerHTML = d.en.topics.map(t =>
+        `<div class="research-topic-item"><div class="research-topic-dot"></div><div class="research-topic-text"><strong>${t.title}</strong><br/>${t.desc}</div></div>`
+      ).join('');
+      // KR
+      document.getElementById('rm-desc-kr').textContent = d.kr.desc;
+      document.getElementById('rm-topics-kr').innerHTML = d.kr.topics.map(t =>
+        `<div class="research-topic-item"><div class="research-topic-dot"></div><div class="research-topic-text"><strong>${t.title}</strong><br/>${t.desc}</div></div>`
       ).join('');
       document.getElementById('researchModal').classList.add('open');
       document.body.style.overflow = 'hidden';
