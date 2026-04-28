@@ -140,6 +140,62 @@
     .section-desc { color: var(--text-muted); max-width: 480px; font-size: 16px; line-height: 1.7; margin-top: 10px; }
     .divider { border: none; border-top: 1px solid var(--border); }
 
+    /* ── IMAGE LIGHTBOX MODAL ── */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 40px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner { position: relative; max-width: 900px; max-height: 85vh; width: 100%; }
+    .lightbox-inner img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; display: block; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+    .lightbox-close {
+      position: absolute; top: -16px; right: -16px;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: white; border: none; cursor: pointer;
+      font-size: 18px; line-height: 1; color: var(--text);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-md); transition: transform 0.2s;
+    }
+    .lightbox-close:hover { transform: scale(1.1); }
+    .pub-thumb { cursor: zoom-in; }
+    .pub-thumb img { transition: opacity 0.2s; }
+    .pub-thumb:hover img { opacity: 0.85; }
+
+    /* ── RESEARCH MODAL ── */
+    .research-modal {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 40px;
+    }
+    .research-modal.open { display: flex; }
+    .research-modal-box {
+      background: white; border-radius: 20px; max-width: 640px; width: 100%;
+      max-height: 85vh; overflow-y: auto;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+      animation: modalIn 0.25s ease;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: none; } }
+    .research-modal-header {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+      padding: 32px 32px 0;
+    }
+    .research-modal-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+    .research-modal-close { background: none; border: none; cursor: pointer; font-size: 20px; color: var(--text-dim); line-height: 1; padding: 4px; border-radius: 6px; transition: background 0.2s; flex-shrink: 0; margin-top: 2px; }
+    .research-modal-close:hover { background: var(--bg2); color: var(--text); }
+    .research-modal-body { padding: 20px 32px 32px; }
+    .research-modal-title { font-family: var(--display); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .research-modal-subtitle { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
+    .research-modal-desc { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; }
+    .research-modal-topics { display: flex; flex-direction: column; gap: 10px; }
+    .research-topic-item { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; background: var(--bg2); border-radius: 10px; border: 1px solid var(--border); }
+    .research-topic-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 8px; }
+    .research-topic-text { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .research-topic-text strong { color: var(--text); font-weight: 600; }
+    .research-card { cursor: pointer; }
+    .research-card::after { content: 'Click to learn more →'; position: absolute; bottom: 16px; right: 20px; font-family: var(--mono); font-size: 10px; color: var(--accent); opacity: 0; transition: opacity 0.2s; }
+    .research-card:hover::after { opacity: 1; }
+
     /* ── VIDEO CARD ── */
     .video-card {
       background: white; border: 1px solid var(--border); border-radius: 16px;
@@ -461,12 +517,12 @@
         <p class="section-desc">Building AI systems for next-generation autonomous mobility.</p>
       </div>
       <div class="research-grid reveal">
-        <div class="research-card"><div class="research-icon">🚗</div><h3 class="research-title">Autonomous Driving Systems</h3><p class="research-desc">End-to-end intelligent systems — from perception to planning and decision-making in complex real-world environments.</p></div>
-        <div class="research-card"><div class="research-icon">👁️</div><h3 class="research-title">2D &amp; 3D Computer Vision</h3><p class="research-desc">Deep learning-based scene understanding, object detection, tracking, and semantic segmentation for camera and LiDAR.</p></div>
-        <div class="research-card"><div class="research-icon">📡</div><h3 class="research-title">Multi-modal Sensor Fusion</h3><p class="research-desc">Combining camera, LiDAR, and radar to build robust, weather-resilient perception pipelines for autonomous vehicles.</p></div>
-        <div class="research-card"><div class="research-icon">🗺️</div><h3 class="research-title">HD Map &amp; SLAM</h3><p class="research-desc">High-definition map construction, lane-level road marking mapping, and simultaneous localization and mapping.</p></div>
-        <div class="research-card"><div class="research-icon">🧠</div><h3 class="research-title">Vision-Language Models</h3><p class="research-desc">VLM-based reasoning for enhanced autonomous driving map construction and pedestrian safety analysis.</p></div>
-        <div class="research-card"><div class="research-icon">🔧</div><h3 class="research-title">Data Generation &amp; Refinement</h3><p class="research-desc">Synthetic data generation using diffusion models and dataset curation pipelines for autonomous driving.</p></div>
+        <div class="research-card" onclick="openResearch('autonomous')"><div class="research-icon">🚗</div><h3 class="research-title">Autonomous Driving Systems</h3><p class="research-desc">End-to-end intelligent systems — from perception to planning and decision-making in complex real-world environments.</p></div>
+        <div class="research-card" onclick="openResearch('vision')"><div class="research-icon">👁️</div><h3 class="research-title">2D &amp; 3D Computer Vision</h3><p class="research-desc">Deep learning-based scene understanding, object detection, tracking, and semantic segmentation for camera and LiDAR.</p></div>
+        <div class="research-card" onclick="openResearch('fusion')"><div class="research-icon">📡</div><h3 class="research-title">Multi-modal Sensor Fusion</h3><p class="research-desc">Combining camera, LiDAR, and radar to build robust, weather-resilient perception pipelines for autonomous vehicles.</p></div>
+        <div class="research-card" onclick="openResearch('hdmap')"><div class="research-icon">🗺️</div><h3 class="research-title">HD Map &amp; SLAM</h3><p class="research-desc">High-definition map construction, lane-level road marking mapping, and simultaneous localization and mapping.</p></div>
+        <div class="research-card" onclick="openResearch('vlm')"><div class="research-icon">🧠</div><h3 class="research-title">Vision-Language Models</h3><p class="research-desc">VLM-based reasoning for enhanced autonomous driving map construction and pedestrian safety analysis.</p></div>
+        <div class="research-card" onclick="openResearch('data')"><div class="research-icon">🔧</div><h3 class="research-title">Data Generation &amp; Refinement</h3><p class="research-desc">Synthetic data generation using diffusion models and dataset curation pipelines for autonomous driving.</p></div>
       </div>
     </div>
   </section>
@@ -489,11 +545,11 @@
              paper-2025.png / paper-2024.png / paper-2022-1.png / paper-2022-2.png -->
         <div id="tab-journal" class="pub-list active">
           <div class="pub-item">
-            <div class="pub-thumb"><img src="assets/papers/paper-2025.png" alt="" loading="lazy" /></div>
+            <div class="pub-thumb" onclick="openLightbox('assets/papers/paper-2025.png')"><img src="assets/papers/paper-2025.png" alt="" loading="lazy" /></div>
             <div class="pub-year">2025</div>
             <div class="pub-body">
               <div class="pub-title">Latent Diffusion-based Pedestrian Attention Estimation for Autonomous Driving</div>
-              <div class="pub-authors">Ian Kim, Wonje Jang</div>
+              <div class="pub-authors">Ian Kim, <strong><strong>Wonje Jang</strong></strong></div>
               <div class="pub-venue">
                 <span class="pub-venue-name">International Journal of Control, Automation and Systems (IJCAS)</span>
                 <span class="pub-if">IF=2.9 · SCIE Q2</span>
@@ -502,11 +558,11 @@
             </div>
           </div>
           <div class="pub-item">
-            <div class="pub-thumb"><img src="assets/papers/paper-2024.png" alt="" loading="lazy" /></div>
+            <div class="pub-thumb" onclick="openLightbox('assets/papers/paper-2024.png')"><img src="assets/papers/paper-2024.png" alt="" loading="lazy" /></div>
             <div class="pub-year">2024</div>
             <div class="pub-body">
               <div class="pub-title">Drivable Region Completion via a 3D LiDAR</div>
-              <div class="pub-authors">Wonje Jang, Euntai Kim</div>
+              <div class="pub-authors"><strong><strong>Wonje Jang</strong></strong>, Euntai Kim</div>
               <div class="pub-venue">
                 <span class="pub-venue-name">IEEE Transactions on Intelligent Transportation Systems</span>
                 <span class="pub-if">IF=9.5 · JCR Top 2.5%</span>
@@ -515,11 +571,11 @@
             </div>
           </div>
           <div class="pub-item">
-            <div class="pub-thumb"><img src="assets/papers/paper-2022-1.png" alt="" loading="lazy" /></div>
+            <div class="pub-thumb" onclick="openLightbox('assets/papers/paper-2022-1.png')"><img src="assets/papers/paper-2022-1.png" alt="" loading="lazy" /></div>
             <div class="pub-year">2022</div>
             <div class="pub-body">
               <div class="pub-title">A Lane-Level Road Marking Map Using a Monocular Camera</div>
-              <div class="pub-authors">Wonje Jang, Junhyuk Hyun, Jhonghyun An, Minho Cho, Euntai Kim</div>
+              <div class="pub-authors"><strong><strong>Wonje Jang</strong></strong>, Junhyuk Hyun, Jhonghyun An, Minho Cho, Euntai Kim</div>
               <div class="pub-venue">
                 <span class="pub-venue-name">IEEE/CAA Journal of Automatica Sinica</span>
                 <span class="pub-if">IF=19.2 · JCR Top 0.6%</span>
@@ -528,11 +584,11 @@
             </div>
           </div>
           <div class="pub-item">
-            <div class="pub-thumb"><img src="assets/papers/paper-2022-2.png" alt="" loading="lazy" /></div>
+            <div class="pub-thumb" onclick="openLightbox('assets/papers/paper-2022-2.png')"><img src="assets/papers/paper-2022-2.png" alt="" loading="lazy" /></div>
             <div class="pub-year">2022</div>
             <div class="pub-body">
               <div class="pub-title">Real-Time Driving Scene Understanding via Efficient 3-D LIDAR Processing</div>
-              <div class="pub-authors">Wonje Jang, Minseong Park, Euntai Kim</div>
+              <div class="pub-authors"><strong><strong>Wonje Jang</strong></strong>, Minseong Park, Euntai Kim</div>
               <div class="pub-venue">
                 <span class="pub-venue-name">IEEE Transactions on Instrumentation and Measurement</span>
                 <span class="pub-if">IF=5.6 · JCR Top 11.2%</span>
@@ -544,27 +600,27 @@
 
         <!-- ─ INTL CONF ─ -->
         <div id="tab-intl-conf" class="pub-list">
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2025</div><div class="pub-body"><div class="pub-title">Pedestrian Attention Estimation via Latent Diffusion for Safe Driving</div><div class="pub-authors">Ian Kim, Wonje Jang</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2025 — 25th International Conference on Control, Automation, and Systems</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2022</div><div class="pub-body"><div class="pub-title">Efficient Sensor Fusion using Transformer</div><div class="pub-authors">Junhyuk Jang, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ASCC 2022 — 13th Asian Control Conference, Jeju</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2022</div><div class="pub-body"><div class="pub-title">Graph-Based Point Tracker for 3D Object Tracking in Point Clouds</div><div class="pub-authors">Minseong Park, Hongje Seong, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">AAAI 2022 — 36th AAAI Conference on Artificial Intelligence, Vancouver</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2021</div><div class="pub-body"><div class="pub-title">The Effective Method for 3D LiDAR Point Clouds Processing</div><div class="pub-authors">Youngjoo Kim, Hongje Seong, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">UR 2021 — 18th International Conference on Ubiquitous Robots, Gangneung</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">Object Classification of Laser Scanner by Using Recurrent Neural Network</div><div class="pub-authors">Minho Cho, Jhonghyun An, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">IEEE TENCON 2018, Jeju</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">Road Lane Semantic Segmentation for High Definition Map</div><div class="pub-authors">Wonje Jang, Jhonghyun An, Sangyun Lee, Minho Cho, Myungki Sun, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">IEEE IV 2018 — Intelligent Vehicle Symposium, Changshu</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2017</div><div class="pub-body"><div class="pub-title">Real Time Road Lane Detection for Outdoor Autonomous Navigation of Mobile Robot</div><div class="pub-authors">Wonje Jang, Jhonghyun An, Minho Cho, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2017</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2016</div><div class="pub-body"><div class="pub-title">Histogram-Model Based Road Boundary Estimation by Using Laser Scanner</div><div class="pub-authors">Minho Cho, Jhonghyun An, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2016</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2025</div><div class="pub-body"><div class="pub-title">Pedestrian Attention Estimation via Latent Diffusion for Safe Driving</div><div class="pub-authors">Ian Kim, <strong>Wonje Jang</strong></div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2025 — 25th International Conference on Control, Automation, and Systems</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2022</div><div class="pub-body"><div class="pub-title">Efficient Sensor Fusion using Transformer</div><div class="pub-authors">Junhyuk Jang, <strong>Wonje Jang</strong>, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ASCC 2022 — 13th Asian Control Conference, Jeju</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2022</div><div class="pub-body"><div class="pub-title">Graph-Based Point Tracker for 3D Object Tracking in Point Clouds</div><div class="pub-authors">Minseong Park, Hongje Seong, <strong>Wonje Jang</strong>, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">AAAI 2022 — 36th AAAI Conference on Artificial Intelligence, Vancouver</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2021</div><div class="pub-body"><div class="pub-title">The Effective Method for 3D LiDAR Point Clouds Processing</div><div class="pub-authors">Youngjoo Kim, Hongje Seong, <strong>Wonje Jang</strong>, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">UR 2021 — 18th International Conference on Ubiquitous Robots, Gangneung</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">Object Classification of Laser Scanner by Using Recurrent Neural Network</div><div class="pub-authors">Minho Cho, Jhonghyun An, <strong>Wonje Jang</strong>, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">IEEE TENCON 2018, Jeju</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">Road Lane Semantic Segmentation for High Definition Map</div><div class="pub-authors"><strong>Wonje Jang</strong>, Jhonghyun An, Sangyun Lee, Minho Cho, Myungki Sun, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">IEEE IV 2018 — Intelligent Vehicle Symposium, Changshu</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2017</div><div class="pub-body"><div class="pub-title">Real Time Road Lane Detection for Outdoor Autonomous Navigation of Mobile Robot</div><div class="pub-authors"><strong>Wonje Jang</strong>, Jhonghyun An, Minho Cho, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2017</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2016</div><div class="pub-body"><div class="pub-title">Histogram-Model Based Road Boundary Estimation by Using Laser Scanner</div><div class="pub-authors">Minho Cho, Jhonghyun An, <strong>Wonje Jang</strong>, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2016</span></div></div></div>
         </div>
 
         <!-- ─ DOMESTIC CONF ─ -->
         <div id="tab-domestic-conf" class="pub-list">
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2025</div><div class="pub-body"><div class="pub-title">자율 주행 모빌리티의 충돌 방지를 위한 보행자 관심 판단 모듈</div><div class="pub-authors">김이안, 장원제</div><div class="pub-venue"><span class="pub-venue-name">ICROS 2025 — 제40회 제어로봇시스템학회 학술대회, 6월</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2021</div><div class="pub-body"><div class="pub-title">악천후 상황이 라이다 센서에 미치는 영향 연구</div><div class="pub-authors">김영주, 장원제, 이건용, 장형준, 김은태</div><div class="pub-venue"><span class="pub-venue-name">한국자동차공학회 춘계학술대회, 2021</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2020</div><div class="pub-body"><div class="pub-title">자율 주행차의 라이다 센서를 위한 Blockage 검출</div><div class="pub-authors">이충면, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">CICS 2020, 제주, 10월</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2020</div><div class="pub-body"><div class="pub-title">LSTM 기반의 다중 차량 경로 예측 네트워크</div><div class="pub-authors">김수연, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">ICROS 2020, 고성, 7월</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2019</div><div class="pub-body"><div class="pub-title">SLAM 모듈을 위한 레이저 스캐너 센서 불필요 데이터 제거</div><div class="pub-authors">장원제, 조해민, 이성원, 우수한, 김은태</div><div class="pub-venue"><span class="pub-venue-name">IPIU 2019, 제주, 2월</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2019</div><div class="pub-body"><div class="pub-title">레이저 스캐너를 이용한 박스 형태 기반 이동로봇 검출 및 추적</div><div class="pub-authors">안종현, 조민호, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제14회 한국로봇종합학술대회, 평창, 1월</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">딥러닝을 이용한 도로 차선 검출 알고리즘</div><div class="pub-authors">안종현, 장원제, 조민호, 조형기, 조해민, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제13회 한국로봇종합학술대회, 횡성, 1월</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2017</div><div class="pub-body"><div class="pub-title">2차원 레이저 스캐너를 이용한 연석 검출 알고리즘</div><div class="pub-authors">안종현, 조민호, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제12회 한국로봇종합학술대회, 평창, 2월</span></div></div></div>
-          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2016</div><div class="pub-body"><div class="pub-title">이동 로봇의 자율 주행을 위한 사람 인식 알고리즘</div><div class="pub-authors">장원제, 최배훈, 안종현, 조민호, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제11회 한국로봇종합학술대회, 평창, 1월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2025</div><div class="pub-body"><div class="pub-title">자율 주행 모빌리티의 충돌 방지를 위한 보행자 관심 판단 모듈</div><div class="pub-authors">김이안, <strong>장원제</strong></div><div class="pub-venue"><span class="pub-venue-name">ICROS 2025 — 제40회 제어로봇시스템학회 학술대회, 6월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2021</div><div class="pub-body"><div class="pub-title">악천후 상황이 라이다 센서에 미치는 영향 연구</div><div class="pub-authors">김영주, <strong>장원제</strong>, 이건용, 장형준, 김은태</div><div class="pub-venue"><span class="pub-venue-name">한국자동차공학회 춘계학술대회, 2021</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2020</div><div class="pub-body"><div class="pub-title">자율 주행차의 라이다 센서를 위한 Blockage 검출</div><div class="pub-authors">이충면, <strong>장원제</strong>, 김은태</div><div class="pub-venue"><span class="pub-venue-name">CICS 2020, 제주, 10월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2020</div><div class="pub-body"><div class="pub-title">LSTM 기반의 다중 차량 경로 예측 네트워크</div><div class="pub-authors">김수연, <strong>장원제</strong>, 김은태</div><div class="pub-venue"><span class="pub-venue-name">ICROS 2020, 고성, 7월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2019</div><div class="pub-body"><div class="pub-title">SLAM 모듈을 위한 레이저 스캐너 센서 불필요 데이터 제거</div><div class="pub-authors"><strong>장원제</strong>, 조해민, 이성원, 우수한, 김은태</div><div class="pub-venue"><span class="pub-venue-name">IPIU 2019, 제주, 2월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2019</div><div class="pub-body"><div class="pub-title">레이저 스캐너를 이용한 박스 형태 기반 이동로봇 검출 및 추적</div><div class="pub-authors">안종현, 조민호, <strong>장원제</strong>, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제14회 한국로봇종합학술대회, 평창, 1월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">딥러닝을 이용한 도로 차선 검출 알고리즘</div><div class="pub-authors">안종현, <strong>장원제</strong>, 조민호, 조형기, 조해민, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제13회 한국로봇종합학술대회, 횡성, 1월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2017</div><div class="pub-body"><div class="pub-title">2차원 레이저 스캐너를 이용한 연석 검출 알고리즘</div><div class="pub-authors">안종현, 조민호, <strong>장원제</strong>, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제12회 한국로봇종합학술대회, 평창, 2월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2016</div><div class="pub-body"><div class="pub-title">이동 로봇의 자율 주행을 위한 사람 인식 알고리즘</div><div class="pub-authors"><strong>장원제</strong>, 최배훈, 안종현, 조민호, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제11회 한국로봇종합학술대회, 평창, 1월</span></div></div></div>
         </div>
       </div>
     </div>
@@ -657,7 +713,7 @@
             <div class="project-meta-item"><span class="project-meta-label">기간</span><span class="project-meta-value">2026.03.01 – 2029.02.28</span></div>
             <div class="project-meta-item"><span class="project-meta-label">총 연구비</span><span class="project-meta-value">₩280,000,000</span></div>
             <div class="project-meta-item"><span class="project-meta-label">주관 기관</span><span class="project-meta-value">한국외국어대학교</span></div>
-            <div class="project-meta-item"><span class="project-meta-label">연구 책임자</span><span class="project-meta-value">장원제 교수</span></div>
+            <div class="project-meta-item"><span class="project-meta-label">연구 책임자</span><span class="project-meta-value"><strong>장원제</strong> 교수</span></div>
           </div>
         </div>
       </div>
@@ -799,17 +855,162 @@
     <span>Hankuk University of Foreign Studies · AI Data Convergence</span>
   </footer>
 
+  <!-- ═══ IMAGE LIGHTBOX ═══ -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <img id="lightbox-img" src="" alt="Paper figure" />
+    </div>
+  </div>
+
+  <!-- ═══ RESEARCH DETAIL MODAL ═══ -->
+  <div class="research-modal" id="researchModal" onclick="closeResearch(event)">
+    <div class="research-modal-box" id="researchModalBox">
+      <div class="research-modal-header">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div class="research-modal-icon" id="rm-icon"></div>
+          <div>
+            <div class="research-modal-title" id="rm-title"></div>
+            <div class="research-modal-subtitle" id="rm-subtitle"></div>
+          </div>
+        </div>
+        <button class="research-modal-close" onclick="closeResearch()">✕</button>
+      </div>
+      <div class="research-modal-body">
+        <div class="research-modal-desc" id="rm-desc"></div>
+        <div class="research-modal-topics" id="rm-topics"></div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // ── Tab switching ──
     function switchTab(id, btn) {
       document.querySelectorAll('.pub-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.pub-list').forEach(l => l.classList.remove('active'));
       document.getElementById('tab-' + id).classList.add('active');
       btn.classList.add('active');
     }
+
+    // ── Scroll reveal ──
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Image Lightbox ──
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e) {
+      if (!e || e.target !== document.querySelector('.lightbox-inner img')) {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // ── Research Modal Data ──
+    const researchData = {
+      autonomous: {
+        icon: '🚗', title: 'Autonomous Driving Systems',
+        subtitle: 'Perception · Planning · Control',
+        desc: 'We develop end-to-end intelligent systems for autonomous mobility. Our research spans the full stack — from real-time sensor processing to high-level decision making — with a focus on safety, robustness, and scalability in complex urban environments.',
+        topics: [
+          { title: 'End-to-End Perception Pipeline', desc: 'Integrating camera and LiDAR inputs to detect, classify, and track objects in real time for safe navigation.' },
+          { title: 'Motion Planning & Prediction', desc: 'Predicting the future trajectories of surrounding vehicles and pedestrians to plan safe, efficient routes.' },
+          { title: 'Smart Mobility Integration', desc: 'Applying autonomous driving technologies to urban mobility systems including delivery robots and campus vehicles.' },
+          { title: 'Safety-Critical System Design', desc: 'Designing fail-safe mechanisms and redundancy strategies for autonomous systems operating in public spaces.' },
+        ]
+      },
+      vision: {
+        icon: '👁️', title: '2D & 3D Computer Vision',
+        subtitle: 'Detection · Segmentation · Tracking',
+        desc: 'Our computer vision research focuses on deep learning-based methods for understanding complex driving scenes from both 2D image and 3D point cloud perspectives.',
+        topics: [
+          { title: 'Object Detection & Classification', desc: 'Real-time detection of vehicles, pedestrians, cyclists, and other road users using state-of-the-art deep neural networks.' },
+          { title: '3D LiDAR Point Cloud Processing', desc: 'Efficient algorithms for ground filtering, clustering, and classification of 3D point cloud data from LiDAR sensors.' },
+          { title: 'Semantic Segmentation', desc: 'Pixel-level and point-level scene understanding for road surface, lane markings, and drivable region extraction.' },
+          { title: 'Multi-Object Tracking', desc: 'Graph-based and filter-based methods for maintaining consistent identities of moving objects across frames.' },
+        ]
+      },
+      fusion: {
+        icon: '📡', title: 'Multi-modal Sensor Fusion',
+        subtitle: 'Camera · LiDAR · Radar',
+        desc: 'We develop robust perception systems that combine complementary sensor modalities — enabling reliable operation in challenging weather and lighting conditions where any single sensor would fail.',
+        topics: [
+          { title: 'Camera-LiDAR Fusion', desc: 'Combining the rich texture of cameras with the precise depth of LiDAR for comprehensive 3D scene understanding.' },
+          { title: 'Transformer-based Fusion', desc: 'Using attention mechanisms to adaptively weight and integrate features from heterogeneous sensor inputs.' },
+          { title: 'Weather-Robust Perception', desc: 'Developing models that maintain reliable performance under rain, fog, and low-light conditions.' },
+          { title: 'Sensor Blockage Detection', desc: 'Automatic detection and recovery when sensors are partially or fully obstructed.' },
+        ]
+      },
+      hdmap: {
+        icon: '🗺️', title: 'HD Map & SLAM',
+        subtitle: 'Mapping · Localization · Navigation',
+        desc: 'High-definition maps are the backbone of autonomous driving. We build automated pipelines to construct and maintain centimeter-accurate HD maps using cameras and LiDAR, enabling precise vehicle localization and navigation.',
+        topics: [
+          { title: 'Lane-Level Road Marking Mapping', desc: 'Automatically extracting and geo-referencing lane markings, arrows, and road symbols from driving video using deep learning segmentation.' },
+          { title: 'Graph-Based SLAM', desc: 'Building globally consistent maps by detecting loop closures and optimizing pose graphs from camera and wheel encoder data.' },
+          { title: 'Drivable Region Completion', desc: 'Completing missing or occluded drivable regions in 3D LiDAR scans to create complete and reliable road maps.' },
+          { title: 'Vector Map Construction', desc: 'Converting raw sensor data into structured, semantic vector maps compatible with autonomous driving stacks.' },
+        ]
+      },
+      vlm: {
+        icon: '🧠', title: 'Vision-Language Models',
+        subtitle: 'VLM · Reasoning · Scene Understanding',
+        desc: 'We leverage the reasoning capabilities of large vision-language models to enhance autonomous driving — enabling systems to understand complex scenes, reason about pedestrian intent, and build semantically rich maps.',
+        topics: [
+          { title: 'Pedestrian Attention Estimation', desc: 'Using latent diffusion and VLM-based reasoning to infer whether pedestrians are paying attention to traffic, for safer collision avoidance.' },
+          { title: 'Reasoning-based HD Map Construction', desc: 'Applying VLMs to reason about road scene semantics and generate richer, context-aware autonomous driving maps.' },
+          { title: 'Scene Description & Understanding', desc: 'Generating natural language descriptions of driving scenarios to improve human-machine interaction and data annotation.' },
+          { title: 'Pedestrian Safety Analysis', desc: 'Building safety-critical systems that assess pedestrian risk levels using visual and contextual reasoning.' },
+        ]
+      },
+      data: {
+        icon: '🔧', title: 'Data Generation & Refinement',
+        subtitle: 'Diffusion · Synthesis · Curation',
+        desc: 'High-quality labeled data is a fundamental bottleneck for autonomous driving AI. We develop methods to generate, augment, and refine training datasets using generative models and automated pipelines.',
+        topics: [
+          { title: 'Latent Diffusion-Based Synthesis', desc: 'Generating realistic synthetic training images of pedestrians and driving scenes using latent diffusion models.' },
+          { title: 'Domain Adaptation', desc: 'Bridging the gap between synthetic and real-world data distributions to improve model generalization.' },
+          { title: 'Automated Data Labeling', desc: 'Semi-automatic annotation pipelines that reduce the cost and time of creating ground-truth labels for perception tasks.' },
+          { title: 'Dataset Curation & Quality Control', desc: 'Methods for filtering, balancing, and verifying large-scale autonomous driving datasets to improve training efficiency.' },
+        ]
+      }
+    };
+
+    function openResearch(key) {
+      const d = researchData[key];
+      document.getElementById('rm-icon').textContent = d.icon;
+      document.getElementById('rm-title').textContent = d.title;
+      document.getElementById('rm-subtitle').textContent = d.subtitle;
+      document.getElementById('rm-desc').textContent = d.desc;
+      document.getElementById('rm-topics').innerHTML = d.topics.map(t =>
+        `<div class="research-topic-item">
+          <div class="research-topic-dot"></div>
+          <div class="research-topic-text"><strong>${t.title}</strong><br/>${t.desc}</div>
+        </div>`
+      ).join('');
+      document.getElementById('researchModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeResearch(e) {
+      const box = document.getElementById('researchModalBox');
+      if (!e || !box.contains(e.target)) {
+        document.getElementById('researchModal').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // ESC key to close any modal
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+        closeResearch();
+      }
+    });
   </script>
 </body>
 </html>
