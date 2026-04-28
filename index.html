@@ -8,6 +8,42 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+
+  <!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║              ASSET PATH GUIDE — 수정 방법 안내               ║
+  ╠══════════════════════════════════════════════════════════════╣
+  ║  assets/
+  ║  ├── logo-banner.png       → 네비게이션 로고 (가로형)
+  ║  ├── logo-color.png        → 히어로 메인 로고
+  ║  ├── favicon.png           → 브라우저 탭 아이콘
+  ║  │
+  ║  ├── members/
+  ║  │   ├── pi-wonje.jpg      → PI 사진
+  ║  │   ├── kim-ian2.jpg      → 김이안
+  ║  │   ├── kang-dohun.jpg    → 강도훈
+  ║  │   ├── lee-shinbi.jpg    → 이신비
+  ║  │   ├── roh-hyeondoo.jpg  → 노현두
+  ║  │   └── lee-seungjae.jpg  → 이승재
+  ║  │
+  ║  ├── papers/
+  ║  │   ├── paper-2025.png    → IJCAS 2025 논문 figure
+  ║  │   ├── paper-2024.png    → T-ITS 2024 논문 figure
+  ║  │   ├── paper-2022-1.png  → JAS 2022 논문 figure
+  ║  │   └── paper-2022-2.png  → TIM 2022 논문 figure
+  ║  │
+  ║  ├── projects/
+  ║  │   └── nrf-2026.png      → NRF 우수신진연구 프로젝트 이미지
+  ║  │
+  ║  ├── gallery/
+  ║  │   └── lab-photo.jpg     → 랩 단체사진 (추가 사진은 여기에)
+  ║  │
+  ║  └── honors/
+  ║      ├── award-2026-autonomous.jpg  → 경기도 자율주행 경진대회 우수상
+  ║      └── award-2026-grise.jpg       → G-RISE PoC 장려상
+  ╚══════════════════════════════════════════════════════════════╝
+  -->
+
   <style>
     :root {
       --bg: #ffffff;
@@ -29,13 +65,14 @@
       --display: 'Bricolage Grotesque', sans-serif;
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
       --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-      --shadow-lg: 0 12px 40px rgba(0,0,0,0.1);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
     }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.75; overflow-x: hidden; }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -48,13 +85,13 @@
     .nav-logo img { height: 38px; width: auto; }
     .nav-links { display: flex; gap: 0; list-style: none; }
     .nav-links a {
-      font-size: 14px; font-weight: 500; color: var(--text-muted);
-      text-decoration: none; padding: 8px 16px; border-radius: 6px;
+      font-size: 13px; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; padding: 8px 14px; border-radius: 6px;
       transition: color 0.2s, background 0.2s;
     }
     .nav-links a:hover { color: var(--accent); background: var(--accent-bg); }
 
-    /* HERO */
+    /* ── HERO ── */
     #home {
       min-height: 100vh; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -75,100 +112,114 @@
       animation: fadeUp 0.7s ease both;
     }
     .hero-logo-wrap { margin-bottom: 32px; animation: fadeUp 0.7s ease 0.1s both; }
-    .hero-logo-img {
-      height: clamp(130px, 17vw, 210px); width: auto;
-      filter: drop-shadow(0 8px 32px rgba(29,78,216,0.12));
-    }
-    .hero-sub {
-      font-size: 19px; color: var(--text-muted); max-width: 540px;
-      margin: 0 auto 48px; font-weight: 400; line-height: 1.7;
-      animation: fadeUp 0.7s ease 0.2s both;
-    }
+    .hero-logo-img { height: clamp(130px, 17vw, 210px); width: auto; filter: drop-shadow(0 8px 32px rgba(29,78,216,0.12)); }
+    .hero-sub { font-size: 19px; color: var(--text-muted); max-width: 540px; margin: 0 auto 48px; font-weight: 400; line-height: 1.7; animation: fadeUp 0.7s ease 0.2s both; }
     .hero-actions { display: flex; gap: 12px; justify-content: center; animation: fadeUp 0.7s ease 0.3s both; }
-    .btn-primary {
-      font-size: 14px; font-weight: 600; padding: 12px 28px;
-      background: var(--accent); color: white; border-radius: 8px;
-      text-decoration: none; transition: all 0.2s; border: none; cursor: pointer;
-    }
+    .btn-primary { font-size: 14px; font-weight: 600; padding: 12px 28px; background: var(--accent); color: white; border-radius: 8px; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
     .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(29,78,216,0.25); }
-    .btn-ghost {
-      font-size: 14px; font-weight: 500; padding: 12px 28px;
-      background: transparent; color: var(--text-muted); border-radius: 8px;
-      text-decoration: none; border: 1px solid var(--border-dark); transition: all 0.2s;
-    }
+    .btn-ghost { font-size: 14px; font-weight: 500; padding: 12px 28px; background: transparent; color: var(--text-muted); border-radius: 8px; text-decoration: none; border: 1px solid var(--border-dark); transition: all 0.2s; }
     .btn-ghost:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-bg); }
 
-    /* STATS */
+    /* ── STATS ── */
     .stats-row {
       display: flex; border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
-      background: white; margin: 64px auto 0; max-width: 680px; width: 100%;
+      background: white; margin: 60px auto 0; max-width: 700px; width: 100%;
       box-shadow: var(--shadow-md); animation: fadeUp 0.7s ease 0.4s both;
     }
     .stat { flex: 1; padding: 24px 16px; text-align: center; border-right: 1px solid var(--border); }
     .stat:last-child { border-right: none; }
-    .stat-num { font-family: var(--display); font-size: 30px; font-weight: 800; letter-spacing: -0.03em; color: var(--accent); }
+    .stat-num { font-family: var(--display); font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: var(--accent); }
     .stat-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin-top: 4px; }
 
-    /* LAYOUT */
+    /* ── LAYOUT ── */
     section { position: relative; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
-    .section-pad { padding: 100px 0; }
-    .section-header { margin-bottom: 56px; }
-    .section-title { font-family: var(--display); font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; }
-    .section-desc { color: var(--text-muted); max-width: 480px; font-size: 17px; line-height: 1.7; margin-top: 12px; }
+    .section-pad { padding: 96px 0; }
+    .section-header { margin-bottom: 52px; }
+    .section-title { font-family: var(--display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; }
+    .section-desc { color: var(--text-muted); max-width: 480px; font-size: 16px; line-height: 1.7; margin-top: 10px; }
     .divider { border: none; border-top: 1px solid var(--border); }
 
-    /* NEWS */
-    #news { background: var(--bg2); }
-    .news-grid {
-      display: flex; flex-direction: column;
-      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
-      background: white; box-shadow: var(--shadow-sm);
+    /* ── VIDEO CARD ── */
+    .video-card {
+      background: white; border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 32px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
     }
-    .news-item { display: flex; align-items: flex-start; gap: 16px; padding: 18px 24px; border-bottom: 1px solid var(--border); transition: background 0.2s; }
+    .video-embed {
+      position: relative; width: 100%; padding-bottom: 56.25%; /* 16:9 */
+      background: #000; border-radius: 0;
+    }
+    .video-embed iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      border: none; display: block;
+    }
+    .video-info {
+      padding: 36px; border-left: 1px solid var(--border);
+      display: flex; flex-direction: column; justify-content: center; gap: 14px;
+    }
+    .video-label {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-bg); border: 1px solid rgba(29,78,216,0.2);
+      padding: 4px 10px; border-radius: 100px; width: fit-content;
+    }
+    .video-title {
+      font-family: var(--display); font-size: 18px; font-weight: 700;
+      letter-spacing: -0.015em; line-height: 1.4; color: var(--text);
+    }
+    .video-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+    .video-link {
+      font-family: var(--mono); font-size: 12px; color: var(--accent);
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 4px;
+    }
+    .video-link:hover { text-decoration: underline; }
+    @media (max-width: 960px) {
+      .video-card { grid-template-columns: 1fr; }
+      .video-info { border-left: none; border-top: 1px solid var(--border); padding: 24px; }
+    }
+    #news { background: var(--bg2); }
+    .news-grid { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: white; box-shadow: var(--shadow-sm); }
+    .news-item { display: flex; align-items: flex-start; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--border); transition: background 0.2s; }
     .news-item:last-child { border-bottom: none; }
     .news-item:hover { background: var(--bg2); }
     .news-badge { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; margin-top: 3px; }
     .badge-project    { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-    .badge-competition{ background: #faf5ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+    .badge-award      { background: #fefce8; color: #a16207; border: 1px solid #fde68a; }
     .badge-journal    { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
     .badge-conference { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
     .badge-welcome    { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
     .news-text { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
     .news-text strong { color: var(--text); font-weight: 600; }
-    .news-text a { color: var(--accent); text-decoration: none; }
-    .news-text a:hover { text-decoration: underline; }
 
-    /* RESEARCH */
+    /* ── RESEARCH ── */
     #research { background: var(--bg); }
     .research-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .research-card {
-      background: white; border: 1px solid var(--border); border-radius: 14px;
-      padding: 32px; transition: all 0.25s; position: relative; overflow: hidden; box-shadow: var(--shadow-sm);
-    }
+    .research-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 32px; transition: all 0.25s; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
     .research-card:hover { border-color: var(--accent-light); transform: translateY(-3px); box-shadow: var(--shadow-md); }
     .research-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0; transition: opacity 0.3s; }
     .research-card:hover::before { opacity: 1; }
-    .research-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
-    .research-title { font-family: var(--display); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; }
-    .research-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+    .research-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 14px; }
+    .research-title { font-family: var(--display); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .research-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
 
-    /* PUBLICATIONS */
+    /* ── PUBLICATIONS ── */
     #publications { background: var(--bg2); }
-    .pub-tabs {
-      display: flex; gap: 2px; background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 10px; padding: 4px; margin-bottom: 36px; width: fit-content;
-    }
-    .pub-tab { font-size: 13px; font-weight: 500; padding: 8px 20px; border-radius: 7px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+    .pub-tabs { display: flex; gap: 2px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 4px; margin-bottom: 32px; width: fit-content; }
+    .pub-tab { font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 7px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
     .pub-tab.active { background: white; color: var(--accent); box-shadow: var(--shadow-sm); }
-    .pub-list { display: none; }
-    .pub-list.active { display: flex; flex-direction: column; }
-    .pub-item { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .pub-list { display: none; flex-direction: column; }
+    .pub-list.active { display: flex; }
+    .pub-item { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
     .pub-item:last-child { border-bottom: none; }
-    .pub-thumb { width: 120px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--bg3); align-self: flex-start; }
-    .pub-thumb img { width: 100%; height: 80px; object-fit: cover; display: block; }
-    .pub-thumb-empty { width: 120px; flex-shrink: 0; }
-    .pub-year { font-family: var(--mono); font-size: 12px; color: var(--text-dim); width: 40px; flex-shrink: 0; padding-top: 3px; }
+
+    /* 논문 썸네일 — assets/papers/ 폴더의 이미지로 자동 연결 */
+    .pub-thumb { width: 130px; height: 90px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--bg3); }
+    .pub-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pub-no-thumb { width: 130px; flex-shrink: 0; }
+
+    .pub-year { font-family: var(--mono); font-size: 12px; color: var(--text-dim); width: 40px; flex-shrink: 0; padding-top: 2px; }
     .pub-body { flex: 1; }
     .pub-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
     .pub-authors { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
@@ -178,60 +229,95 @@
     .pub-doi { font-family: var(--mono); font-size: 11px; color: var(--accent); text-decoration: none; }
     .pub-doi:hover { text-decoration: underline; }
 
-    /* MEMBERS */
+    /* ── MEMBERS ── */
     #members { background: var(--bg); }
-    .pi-card { display: grid; grid-template-columns: 260px 1fr; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: white; margin-bottom: 48px; box-shadow: var(--shadow-sm); }
-    .pi-portrait { background: linear-gradient(160deg, var(--accent-bg), #e0e7ff); display: flex; align-items: flex-end; justify-content: center; padding: 40px 40px 0; min-height: 280px; }
-    .pi-avatar { width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 44px; font-weight: 800; color: white; border: 3px solid rgba(255,255,255,0.6); }
-    .pi-info { padding: 36px; border-left: 1px solid var(--border); }
+    .pi-card { display: grid; grid-template-columns: 300px 1fr; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: white; margin-bottom: 48px; box-shadow: var(--shadow-sm); }
+    .pi-portrait { overflow: hidden; min-height: 380px; }
+    .pi-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .pi-info { padding: 40px; border-left: 1px solid var(--border); }
     .pi-role { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
-    .pi-name { font-family: var(--display); font-size: 36px; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 4px; }
-    .pi-email { font-family: var(--mono); font-size: 13px; color: var(--text-muted); text-decoration: none; margin-bottom: 28px; display: block; }
+    .pi-name { font-family: var(--display); font-size: 34px; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 4px; }
+    .pi-email { font-family: var(--mono); font-size: 13px; color: var(--text-muted); text-decoration: none; margin-bottom: 24px; display: block; }
     .pi-email:hover { color: var(--accent); }
-    .pi-section-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
-    .pi-timeline { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+    .pi-bio { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .pi-section-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; margin-top: 16px; }
+    .pi-timeline { display: flex; flex-direction: column; gap: 6px; }
     .pi-timeline-item { display: flex; gap: 12px; font-size: 14px; color: var(--text-muted); }
-    .pi-timeline-year { font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; flex-shrink: 0; }
+    .pi-timeline-year { font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; flex-shrink: 0; padding-top: 2px; }
+
     .member-type-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin: 40px 0 16px; }
-    .members-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+    .members-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 16px; }
     .member-card { background: white; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: all 0.25s; box-shadow: var(--shadow-sm); }
     .member-card:hover { border-color: var(--accent-light); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    /* 멤버 사진 — assets/members/ 폴더의 이미지로 자동 연결 */
     .member-photo { width: 100%; aspect-ratio: 1; overflow: hidden; background: var(--bg3); }
     .member-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.4s; }
     .member-card:hover .member-photo img { transform: scale(1.04); }
-    .member-body { padding: 16px; }
+    .member-body { padding: 14px 16px 16px; }
     .member-name { font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 2px; }
     .member-name-kr { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
     .member-major { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
     .member-fields { display: flex; flex-wrap: wrap; gap: 4px; }
     .field-tag { font-family: var(--mono); font-size: 9px; padding: 2px 7px; background: var(--accent-bg); border: 1px solid #bfdbfe; color: var(--accent); border-radius: 100px; }
-    .recruiting-banner { background: linear-gradient(135deg, var(--accent-bg), #f0f4ff); border: 1px solid #bfdbfe; border-radius: 16px; padding: 36px 44px; display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-top: 56px; box-shadow: var(--shadow-sm); }
+
+    .recruiting-banner { background: linear-gradient(135deg, var(--accent-bg), #f0f4ff); border: 1px solid #bfdbfe; border-radius: 16px; padding: 36px 44px; display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-top: 48px; box-shadow: var(--shadow-sm); }
     .recruiting-text h3 { font-family: var(--display); font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
     .recruiting-text p { color: var(--text-muted); font-size: 14px; }
 
-    /* PROJECTS */
+    /* ── PROJECTS ── */
     #projects { background: var(--bg2); }
     .project-card { background: white; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); display: grid; grid-template-columns: 1fr 1fr; }
-    .project-img { background: var(--bg3); overflow: hidden; min-height: 280px; }
+    /* 프로젝트 이미지 — assets/projects/ 폴더 이미지로 교체 */
+    .project-img { overflow: hidden; min-height: 300px; background: var(--bg3); }
     .project-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .project-body { padding: 44px; border-left: 1px solid var(--border); }
     .project-funder { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent3); margin-bottom: 14px; }
-    .project-title { font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.4; margin-bottom: 24px; }
+    .project-title { font-family: var(--display); font-size: 21px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.4; margin-bottom: 24px; }
     .project-meta { display: flex; flex-direction: column; gap: 14px; }
     .project-meta-item { display: flex; flex-direction: column; gap: 3px; }
     .project-meta-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
     .project-meta-value { font-size: 14px; font-weight: 500; }
 
-    /* GALLERY */
-    #gallery { background: var(--bg); }
-    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    /* ── HONORS ── */
+    #honors { background: var(--bg); }
+    .honors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .honor-card {
+      background: white; border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; box-shadow: var(--shadow-sm); transition: all 0.25s;
+      display: flex; flex-direction: column;
+    }
+    .honor-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--border-dark); }
+    /* 수상 이미지 — assets/honors/ 폴더 이미지로 교체 */
+    .honor-img { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: var(--bg3); position: relative; }
+    .honor-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.4s; }
+    .honor-card:hover .honor-img img { transform: scale(1.03); }
+    .honor-body { padding: 24px 28px 28px; border-top: 1px solid var(--border); flex: 1; }
+    .honor-year { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+    .honor-award { font-family: var(--display); font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; color: var(--text); }
+    .honor-award-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      padding: 4px 12px; border-radius: 100px; margin-bottom: 12px;
+    }
+    .honor-award-badge.gold   { background: #fefce8; color: #a16207; border: 1px solid #fde68a; }
+    .honor-award-badge.silver { background: #f8fafc; color: #475569; border: 1px solid #e2e8f0; }
+    .honor-award-badge.bronze { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+    .honor-event { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .honor-team { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+    .honor-team strong { color: var(--text); font-weight: 600; }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--bg2); }
+    /* 갤러리 사진 — assets/gallery/ 폴더에 이미지 추가하고 HTML에 <img> 태그 추가 */
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .gallery-item { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-sm); aspect-ratio: 4/3; background: var(--bg3); transition: all 0.25s; }
     .gallery-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-    .gallery-item.wide { grid-column: span 2; }
+    .gallery-item.wide { grid-column: span 2; aspect-ratio: 16/7; }
+    .gallery-item.portrait { aspect-ratio: 3/4; }
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
     .gallery-item:hover img { transform: scale(1.03); }
 
-    /* CONTACT */
+    /* ── CONTACT ── */
     #contact { background: var(--bg2); }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .contact-block { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 44px; box-shadow: var(--shadow-sm); }
@@ -241,16 +327,16 @@
     .contact-value a { color: var(--accent); text-decoration: none; }
     .contact-value a:hover { text-decoration: underline; }
 
-    /* FOOTER */
-    footer { border-top: 1px solid var(--border); padding: 36px 48px; display: flex; align-items: center; justify-content: space-between; color: var(--text-dim); font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; }
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; color: var(--text-dim); font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; }
 
-    /* ANIMATION */
+    /* ── ANIMATION ── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
       nav { padding: 0 20px; }
       .nav-links { display: none; }
       #home { padding: 100px 20px 60px; }
@@ -258,10 +344,13 @@
       .section-pad { padding: 72px 0; }
       .research-grid { grid-template-columns: 1fr 1fr; }
       .pi-card { grid-template-columns: 1fr; }
+      .pi-portrait { min-height: 280px; }
       .pi-info { border-left: none; border-top: 1px solid var(--border); }
       .project-card { grid-template-columns: 1fr; }
+      .project-img { min-height: 220px; }
       .project-body { border-left: none; border-top: 1px solid var(--border); padding: 28px; }
       .contact-grid { grid-template-columns: 1fr; }
+      .honors-grid { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: 1fr 1fr; }
       .gallery-item.wide { grid-column: span 2; }
       .stats-row { flex-direction: column; }
@@ -273,16 +362,17 @@
     @media (max-width: 600px) {
       .research-grid { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: 1fr; }
-      .gallery-item.wide { grid-column: span 1; }
-      .pub-thumb, .pub-thumb-empty { display: none; }
+      .gallery-item.wide { grid-column: span 1; aspect-ratio: 4/3; }
+      .pub-thumb, .pub-no-thumb { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- ═══ NAV ═══ -->
   <nav>
     <a href="#home" class="nav-logo">
+      <!-- 로고 교체: assets/logo-banner.png -->
       <img src="assets/logo-banner.png" alt="VOID Lab" />
     </a>
     <ul class="nav-links">
@@ -291,15 +381,17 @@
       <li><a href="#publications">Publications</a></li>
       <li><a href="#members">Members</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#honors">Honors</a></li>
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
+  <!-- ═══ HERO ═══ -->
   <section id="home">
     <div class="hero-tag">@ HUFS — AI Data Convergence Division</div>
     <div class="hero-logo-wrap">
+      <!-- 히어로 로고 교체: assets/logo-color.png -->
       <img src="assets/logo-color.png" alt="VOID Lab" class="hero-logo-img" />
     </div>
     <p class="hero-sub">
@@ -314,22 +406,45 @@
       <div class="stat"><div class="stat-num">4+</div><div class="stat-label">Journal Papers</div></div>
       <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Int'l Conferences</div></div>
       <div class="stat"><div class="stat-num">₩280M</div><div class="stat-label">Research Funding</div></div>
-      <div class="stat"><div class="stat-num">NRF</div><div class="stat-label">Excellence Award</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Awards 2026</div></div>
     </div>
   </section>
 
-  <!-- NEWS -->
+  <!-- ═══ NEWS ═══ -->
   <section id="news">
     <div class="container section-pad">
       <div class="section-header reveal"><h2 class="section-title">News &amp; Highlights</h2></div>
+
+      <!-- 연구 소개 영상 -->
+      <div class="video-card reveal">
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/OZlgYOButQk"
+            title="VOID Lab Research Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-info">
+          <span class="video-label">Featured Video</span>
+          <div class="video-title">VOID Lab Research Introduction</div>
+          <div class="video-desc">
+            VOID Lab의 자율주행 연구를 소개하는 영상입니다.<br/>
+            보행자 안전을 위한 Latent Diffusion 기반 어텐션 추정 등 주요 연구 성과를 확인하세요.
+          </div>
+          <a class="video-link" href="https://www.youtube.com/watch?v=OZlgYOButQk" target="_blank" rel="noopener">
+            ↗ YouTube에서 보기
+          </a>
+        </div>
+      </div>
       <div class="news-grid reveal">
         <div class="news-item"><span class="news-badge badge-project">Project</span><span class="news-text"><strong>NRF 우수신진연구 선정</strong> — 보행자 안전 강화를 위한 VLM 기반 추론형 자율 주행 지도 구축 기술 개발 과제 선정 (총 연구비 2.8억, 26.3–29.2)</span></div>
-        <div class="news-item"><span class="news-badge badge-competition">Award</span><span class="news-text"><strong>Team SEESAW</strong> — 2026 경기도 자율주행 경진대회 <strong>우수상</strong> (차세대융합기술연구원장상) 수상</span></div>
-        <div class="news-item"><span class="news-badge badge-competition">Award</span><span class="news-text"><strong>Team Vision2Language</strong> — G-RISE 지역 산업군 PoC 과제 발표 <strong>장려상</strong> 수상</span></div>
+        <div class="news-item"><span class="news-badge badge-award">Award</span><span class="news-text"><strong>Team SEESAW</strong> — 2026 경기도 자율주행 경진대회 <strong>우수상</strong> (차세대융합기술연구원장상) 수상</span></div>
+        <div class="news-item"><span class="news-badge badge-award">Award</span><span class="news-text"><strong>Team Vision2Language</strong> — G-RISE 지역 산업군 PoC 과제 발표 <strong>장려상</strong> 수상</span></div>
         <div class="news-item"><span class="news-badge badge-journal">Journal</span><span class="news-text">"Latent Diffusion-Based Pedestrian Attention Estimation for Autonomous Driving" accepted in <strong>IJCAS</strong> (SCIE Q2, IF=2.9)</span></div>
         <div class="news-item"><span class="news-badge badge-conference">Conference</span><span class="news-text">"Pedestrian Attention Estimation via Latent Diffusion for Safe Driving" accepted at <strong>ICCAS 2025</strong></span></div>
         <div class="news-item"><span class="news-badge badge-conference">Conference</span><span class="news-text">"자율 주행 모빌리티의 충돌 방지를 위한 보행자 관심 판단 모듈" accepted at <strong>ICROS 2025</strong></span></div>
-        <div class="news-item"><span class="news-badge badge-competition">Award</span><span class="news-text"><strong>김이안</strong> — 디지털 헬스케어 해커톤 대회 <strong>최우수상</strong> 수상</span></div>
+        <div class="news-item"><span class="news-badge badge-award">Award</span><span class="news-text"><strong>김이안</strong> — 디지털 헬스케어 해커톤 대회 <strong>최우수상</strong> 수상</span></div>
         <div class="news-item"><span class="news-badge badge-welcome">Welcome</span><span class="news-text"><strong>SeungJae Lee</strong> joined VOID Lab (2026.03.03)</span></div>
         <div class="news-item"><span class="news-badge badge-welcome">Welcome</span><span class="news-text"><strong>HyeonDoo Roh</strong> joined VOID Lab (2025.10.14)</span></div>
         <div class="news-item"><span class="news-badge badge-welcome">Welcome</span><span class="news-text"><strong>Shinbi Lee</strong> &amp; <strong>Dohun Kang</strong> joined VOID Lab (2025.07.01)</span></div>
@@ -339,27 +454,27 @@
 
   <hr class="divider" />
 
-  <!-- RESEARCH -->
+  <!-- ═══ RESEARCH ═══ -->
   <section id="research">
     <div class="container section-pad">
       <div class="section-header reveal">
         <h2 class="section-title">Research Areas</h2>
-        <p class="section-desc">Our lab focuses on building AI systems for next-generation autonomous mobility.</p>
+        <p class="section-desc">Building AI systems for next-generation autonomous mobility.</p>
       </div>
       <div class="research-grid reveal">
-        <div class="research-card"><div class="research-icon">🚗</div><h3 class="research-title">Autonomous Driving Systems</h3><p class="research-desc">End-to-end intelligent systems for smart mobility — from perception to planning and decision-making in complex real-world environments.</p></div>
-        <div class="research-card"><div class="research-icon">👁️</div><h3 class="research-title">2D &amp; 3D Computer Vision</h3><p class="research-desc">Deep learning-based scene understanding, object detection, tracking, and semantic segmentation for both camera and LiDAR modalities.</p></div>
-        <div class="research-card"><div class="research-icon">📡</div><h3 class="research-title">Multi-modal Sensor Fusion</h3><p class="research-desc">Combining camera, LiDAR, and radar data to build robust, weather-resilient perception pipelines for autonomous vehicles.</p></div>
-        <div class="research-card"><div class="research-icon">🗺️</div><h3 class="research-title">HD Map &amp; SLAM</h3><p class="research-desc">High-definition map construction, lane-level road marking mapping, and simultaneous localization and mapping for precise navigation.</p></div>
-        <div class="research-card"><div class="research-icon">🧠</div><h3 class="research-title">Vision-Language Models</h3><p class="research-desc">Leveraging VLM-based reasoning for enhanced autonomous driving map construction and pedestrian safety analysis.</p></div>
-        <div class="research-card"><div class="research-icon">🔧</div><h3 class="research-title">Data Generation &amp; Refinement</h3><p class="research-desc">Synthetic data generation using diffusion models and dataset curation pipelines to accelerate autonomous driving model training.</p></div>
+        <div class="research-card"><div class="research-icon">🚗</div><h3 class="research-title">Autonomous Driving Systems</h3><p class="research-desc">End-to-end intelligent systems — from perception to planning and decision-making in complex real-world environments.</p></div>
+        <div class="research-card"><div class="research-icon">👁️</div><h3 class="research-title">2D &amp; 3D Computer Vision</h3><p class="research-desc">Deep learning-based scene understanding, object detection, tracking, and semantic segmentation for camera and LiDAR.</p></div>
+        <div class="research-card"><div class="research-icon">📡</div><h3 class="research-title">Multi-modal Sensor Fusion</h3><p class="research-desc">Combining camera, LiDAR, and radar to build robust, weather-resilient perception pipelines for autonomous vehicles.</p></div>
+        <div class="research-card"><div class="research-icon">🗺️</div><h3 class="research-title">HD Map &amp; SLAM</h3><p class="research-desc">High-definition map construction, lane-level road marking mapping, and simultaneous localization and mapping.</p></div>
+        <div class="research-card"><div class="research-icon">🧠</div><h3 class="research-title">Vision-Language Models</h3><p class="research-desc">VLM-based reasoning for enhanced autonomous driving map construction and pedestrian safety analysis.</p></div>
+        <div class="research-card"><div class="research-icon">🔧</div><h3 class="research-title">Data Generation &amp; Refinement</h3><p class="research-desc">Synthetic data generation using diffusion models and dataset curation pipelines for autonomous driving.</p></div>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- PUBLICATIONS -->
+  <!-- ═══ PUBLICATIONS ═══ -->
   <section id="publications">
     <div class="container section-pad">
       <div class="section-header reveal"><h2 class="section-title">Publications</h2></div>
@@ -370,14 +485,21 @@
           <button class="pub-tab" onclick="switchTab('domestic-conf',this)">Domestic Conference</button>
         </div>
 
+        <!-- ─ JOURNAL ─
+             썸네일 교체: src 속성의 파일명만 변경 (assets/papers/ 폴더)
+             paper-2025.png / paper-2024.png / paper-2022-1.png / paper-2022-2.png -->
         <div id="tab-journal" class="pub-list active">
           <div class="pub-item">
-            <div class="pub-thumb"><img src="assets/papers/paper-2024.png" alt="" loading="lazy" /></div>
+            <div class="pub-thumb"><img src="assets/papers/paper-2025.png" alt="" loading="lazy" /></div>
             <div class="pub-year">2025</div>
             <div class="pub-body">
               <div class="pub-title">Latent Diffusion-based Pedestrian Attention Estimation for Autonomous Driving</div>
               <div class="pub-authors">Ian Kim, Wonje Jang</div>
-              <div class="pub-venue"><span class="pub-venue-name">International Journal of Control, Automation and Systems (IJCAS)</span><span class="pub-if">IF=2.9 · SCIE Q2</span><a href="https://doi.org/10.1007/s12555-025-0514-7" class="pub-doi" target="_blank">DOI →</a></div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">International Journal of Control, Automation and Systems (IJCAS)</span>
+                <span class="pub-if">IF=2.9 · SCIE Q2</span>
+                <a href="https://doi.org/10.1007/s12555-025-0514-7" class="pub-doi" target="_blank">DOI →</a>
+              </div>
             </div>
           </div>
           <div class="pub-item">
@@ -386,7 +508,11 @@
             <div class="pub-body">
               <div class="pub-title">Drivable Region Completion via a 3D LiDAR</div>
               <div class="pub-authors">Wonje Jang, Euntai Kim</div>
-              <div class="pub-venue"><span class="pub-venue-name">IEEE Transactions on Intelligent Transportation Systems</span><span class="pub-if">IF=9.5 · JCR Top 2.5%</span><a href="https://doi.org/10.1109/TITS.2024.3367130" class="pub-doi" target="_blank">DOI →</a></div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">IEEE Transactions on Intelligent Transportation Systems</span>
+                <span class="pub-if">IF=9.5 · JCR Top 2.5%</span>
+                <a href="https://doi.org/10.1109/TITS.2024.3367130" class="pub-doi" target="_blank">DOI →</a>
+              </div>
             </div>
           </div>
           <div class="pub-item">
@@ -395,7 +521,11 @@
             <div class="pub-body">
               <div class="pub-title">A Lane-Level Road Marking Map Using a Monocular Camera</div>
               <div class="pub-authors">Wonje Jang, Junhyuk Hyun, Jhonghyun An, Minho Cho, Euntai Kim</div>
-              <div class="pub-venue"><span class="pub-venue-name">IEEE/CAA Journal of Automatica Sinica</span><span class="pub-if">IF=19.2 · JCR Top 0.6%</span><a href="https://doi.org/10.1109/JAS.2021.1004293" class="pub-doi" target="_blank">DOI →</a></div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">IEEE/CAA Journal of Automatica Sinica</span>
+                <span class="pub-if">IF=19.2 · JCR Top 0.6%</span>
+                <a href="https://doi.org/10.1109/JAS.2021.1004293" class="pub-doi" target="_blank">DOI →</a>
+              </div>
             </div>
           </div>
           <div class="pub-item">
@@ -404,32 +534,38 @@
             <div class="pub-body">
               <div class="pub-title">Real-Time Driving Scene Understanding via Efficient 3-D LIDAR Processing</div>
               <div class="pub-authors">Wonje Jang, Minseong Park, Euntai Kim</div>
-              <div class="pub-venue"><span class="pub-venue-name">IEEE Transactions on Instrumentation and Measurement</span><span class="pub-if">IF=5.6 · JCR Top 11.2%</span><a href="https://doi.org/10.1109/TIM.2022.3197771" class="pub-doi" target="_blank">DOI →</a></div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">IEEE Transactions on Instrumentation and Measurement</span>
+                <span class="pub-if">IF=5.6 · JCR Top 11.2%</span>
+                <a href="https://doi.org/10.1109/TIM.2022.3197771" class="pub-doi" target="_blank">DOI →</a>
+              </div>
             </div>
           </div>
         </div>
 
+        <!-- ─ INTL CONF ─ -->
         <div id="tab-intl-conf" class="pub-list">
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2025</div><div class="pub-body"><div class="pub-title">Pedestrian Attention Estimation via Latent Diffusion for Safe Driving</div><div class="pub-authors">Ian Kim, Wonje Jang</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2025 — 25th International Conference on Control, Automation, and Systems</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2022</div><div class="pub-body"><div class="pub-title">Efficient Sensor Fusion using Transformer</div><div class="pub-authors">Junhyuk Jang, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ASCC 2022 — 13th Asian Control Conference, Jeju</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2022</div><div class="pub-body"><div class="pub-title">Graph-Based Point Tracker for 3D Object Tracking in Point Clouds</div><div class="pub-authors">Minseong Park, Hongje Seong, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">AAAI 2022 — 36th AAAI Conference on Artificial Intelligence, Vancouver</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2021</div><div class="pub-body"><div class="pub-title">The Effective Method for 3D LiDAR Point Clouds Processing</div><div class="pub-authors">Youngjoo Kim, Hongje Seong, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">UR 2021 — 18th International Conference on Ubiquitous Robots, Gangneung</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">Object Classification of Laser Scanner by Using Recurrent Neural Network</div><div class="pub-authors">Minho Cho, Jhonghyun An, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">IEEE TENCON 2018, Jeju</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">Road Lane Semantic Segmentation for High Definition Map</div><div class="pub-authors">Wonje Jang, Jhonghyun An, Sangyun Lee, Minho Cho, Myungki Sun, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">IEEE IV 2018 — Intelligent Vehicle Symposium, Changshu</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2017</div><div class="pub-body"><div class="pub-title">Real Time Road Lane Detection for Outdoor Autonomous Navigation of Mobile Robot</div><div class="pub-authors">Wonje Jang, Jhonghyun An, Minho Cho, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2017</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2016</div><div class="pub-body"><div class="pub-title">Histogram-Model Based Road Boundary Estimation by Using Laser Scanner</div><div class="pub-authors">Minho Cho, Jhonghyun An, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2016</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2025</div><div class="pub-body"><div class="pub-title">Pedestrian Attention Estimation via Latent Diffusion for Safe Driving</div><div class="pub-authors">Ian Kim, Wonje Jang</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2025 — 25th International Conference on Control, Automation, and Systems</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2022</div><div class="pub-body"><div class="pub-title">Efficient Sensor Fusion using Transformer</div><div class="pub-authors">Junhyuk Jang, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ASCC 2022 — 13th Asian Control Conference, Jeju</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2022</div><div class="pub-body"><div class="pub-title">Graph-Based Point Tracker for 3D Object Tracking in Point Clouds</div><div class="pub-authors">Minseong Park, Hongje Seong, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">AAAI 2022 — 36th AAAI Conference on Artificial Intelligence, Vancouver</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2021</div><div class="pub-body"><div class="pub-title">The Effective Method for 3D LiDAR Point Clouds Processing</div><div class="pub-authors">Youngjoo Kim, Hongje Seong, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">UR 2021 — 18th International Conference on Ubiquitous Robots, Gangneung</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">Object Classification of Laser Scanner by Using Recurrent Neural Network</div><div class="pub-authors">Minho Cho, Jhonghyun An, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">IEEE TENCON 2018, Jeju</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">Road Lane Semantic Segmentation for High Definition Map</div><div class="pub-authors">Wonje Jang, Jhonghyun An, Sangyun Lee, Minho Cho, Myungki Sun, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">IEEE IV 2018 — Intelligent Vehicle Symposium, Changshu</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2017</div><div class="pub-body"><div class="pub-title">Real Time Road Lane Detection for Outdoor Autonomous Navigation of Mobile Robot</div><div class="pub-authors">Wonje Jang, Jhonghyun An, Minho Cho, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2017</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2016</div><div class="pub-body"><div class="pub-title">Histogram-Model Based Road Boundary Estimation by Using Laser Scanner</div><div class="pub-authors">Minho Cho, Jhonghyun An, Wonje Jang, Euntai Kim</div><div class="pub-venue"><span class="pub-venue-name">ICCAS 2016</span></div></div></div>
         </div>
 
+        <!-- ─ DOMESTIC CONF ─ -->
         <div id="tab-domestic-conf" class="pub-list">
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2025</div><div class="pub-body"><div class="pub-title">자율 주행 모빌리티의 충돌 방지를 위한 보행자 관심 판단 모듈</div><div class="pub-authors">김이안, 장원제</div><div class="pub-venue"><span class="pub-venue-name">ICROS 2025 — 제40회 제어로봇시스템학회 학술대회, 6월</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2021</div><div class="pub-body"><div class="pub-title">악천후 상황이 라이다 센서에 미치는 영향 연구</div><div class="pub-authors">김영주, 장원제, 이건용, 장형준, 김은태</div><div class="pub-venue"><span class="pub-venue-name">한국자동차공학회 춘계학술대회, 2021</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2020</div><div class="pub-body"><div class="pub-title">자율 주행차의 라이다 센서를 위한 Blockage 검출</div><div class="pub-authors">이충면, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">CICS 2020, 제주, 10월</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2020</div><div class="pub-body"><div class="pub-title">LSTM 기반의 다중 차량 경로 예측 네트워크</div><div class="pub-authors">김수연, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">ICROS 2020, 고성, 7월</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2019</div><div class="pub-body"><div class="pub-title">SLAM 모듈을 위한 레이저 스캐너 센서 불필요 데이터 제거</div><div class="pub-authors">장원제, 조해민, 이성원, 우수한, 김은태</div><div class="pub-venue"><span class="pub-venue-name">IPIU 2019, 제주, 2월</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2019</div><div class="pub-body"><div class="pub-title">레이저 스캐너를 이용한 박스 형태 기반 이동로봇 검출 및 추적</div><div class="pub-authors">안종현, 조민호, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제14회 한국로봇종합학술대회, 평창, 1월</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">딥러닝을 이용한 도로 차선 검출 알고리즘</div><div class="pub-authors">안종현, 장원제, 조민호, 조형기, 조해민, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제13회 한국로봇종합학술대회, 횡성, 1월</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2017</div><div class="pub-body"><div class="pub-title">2차원 레이저 스캐너를 이용한 연석 검출 알고리즘</div><div class="pub-authors">안종현, 조민호, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제12회 한국로봇종합학술대회, 평창, 2월</span></div></div></div>
-          <div class="pub-item"><div class="pub-thumb-empty"></div><div class="pub-year">2016</div><div class="pub-body"><div class="pub-title">이동 로봇의 자율 주행을 위한 사람 인식 알고리즘</div><div class="pub-authors">장원제, 최배훈, 안종현, 조민호, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제11회 한국로봇종합학술대회, 평창, 1월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2025</div><div class="pub-body"><div class="pub-title">자율 주행 모빌리티의 충돌 방지를 위한 보행자 관심 판단 모듈</div><div class="pub-authors">김이안, 장원제</div><div class="pub-venue"><span class="pub-venue-name">ICROS 2025 — 제40회 제어로봇시스템학회 학술대회, 6월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2021</div><div class="pub-body"><div class="pub-title">악천후 상황이 라이다 센서에 미치는 영향 연구</div><div class="pub-authors">김영주, 장원제, 이건용, 장형준, 김은태</div><div class="pub-venue"><span class="pub-venue-name">한국자동차공학회 춘계학술대회, 2021</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2020</div><div class="pub-body"><div class="pub-title">자율 주행차의 라이다 센서를 위한 Blockage 검출</div><div class="pub-authors">이충면, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">CICS 2020, 제주, 10월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2020</div><div class="pub-body"><div class="pub-title">LSTM 기반의 다중 차량 경로 예측 네트워크</div><div class="pub-authors">김수연, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">ICROS 2020, 고성, 7월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2019</div><div class="pub-body"><div class="pub-title">SLAM 모듈을 위한 레이저 스캐너 센서 불필요 데이터 제거</div><div class="pub-authors">장원제, 조해민, 이성원, 우수한, 김은태</div><div class="pub-venue"><span class="pub-venue-name">IPIU 2019, 제주, 2월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2019</div><div class="pub-body"><div class="pub-title">레이저 스캐너를 이용한 박스 형태 기반 이동로봇 검출 및 추적</div><div class="pub-authors">안종현, 조민호, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제14회 한국로봇종합학술대회, 평창, 1월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2018</div><div class="pub-body"><div class="pub-title">딥러닝을 이용한 도로 차선 검출 알고리즘</div><div class="pub-authors">안종현, 장원제, 조민호, 조형기, 조해민, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제13회 한국로봇종합학술대회, 횡성, 1월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2017</div><div class="pub-body"><div class="pub-title">2차원 레이저 스캐너를 이용한 연석 검출 알고리즘</div><div class="pub-authors">안종현, 조민호, 장원제, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제12회 한국로봇종합학술대회, 평창, 2월</span></div></div></div>
+          <div class="pub-item"><div class="pub-no-thumb"></div><div class="pub-year">2016</div><div class="pub-body"><div class="pub-title">이동 로봇의 자율 주행을 위한 사람 인식 알고리즘</div><div class="pub-authors">장원제, 최배훈, 안종현, 조민호, 김은태</div><div class="pub-venue"><span class="pub-venue-name">제11회 한국로봇종합학술대회, 평창, 1월</span></div></div></div>
         </div>
       </div>
     </div>
@@ -437,16 +573,23 @@
 
   <hr class="divider" />
 
-  <!-- MEMBERS -->
+  <!-- ═══ MEMBERS ═══ -->
   <section id="members">
     <div class="container section-pad">
       <div class="section-header reveal"><h2 class="section-title">Members</h2></div>
+
+      <!-- PI 카드 — 사진 교체: assets/members/pi-wonje.jpg -->
       <div class="pi-card reveal">
-        <div class="pi-portrait"><div class="pi-avatar">WJ</div></div>
+        <div class="pi-portrait">
+          <img src="assets/members/pi-wonje.jpg" alt="Prof. Won Je Jang" />
+        </div>
         <div class="pi-info">
           <div class="pi-role">Principal Investigator</div>
           <div class="pi-name">Won Je Jang</div>
           <a href="mailto:wonje@hufs.ac.kr" class="pi-email">wonje@hufs.ac.kr</a>
+          <div class="pi-bio">
+            Prof. Won Je Jang received his B.S. and Ph.D. degrees in Electrical and Electronic Engineering from Yonsei University in 2015 and 2022, respectively. After graduation, he worked as a Senior Research Engineer at Hyundai Motor Company (2023–2025), where he led research on autonomous driving perception systems. He joined the Division of AI Data Convergence at Hankuk University of Foreign Studies (HUFS) as an Assistant Professor in 2025, where he founded the VOID Lab. His research interests include autonomous driving, 3D LiDAR-based scene understanding, HD map construction, vision-language models, and multi-modal sensor fusion.
+          </div>
           <div class="pi-section-label">Education</div>
           <div class="pi-timeline">
             <div class="pi-timeline-item"><span class="pi-timeline-year">2015–2022</span><span>Ph.D., Electrical &amp; Electronic Engineering, Yonsei University</span></div>
@@ -460,6 +603,7 @@
         </div>
       </div>
 
+      <!-- 멤버 카드 — 사진 교체: assets/members/ 폴더의 파일명 변경 -->
       <div class="reveal">
         <div class="member-type-label">Undergraduate Internship</div>
         <div class="members-grid">
@@ -498,12 +642,15 @@
 
   <hr class="divider" />
 
-  <!-- PROJECTS -->
+  <!-- ═══ PROJECTS ═══ -->
   <section id="projects">
     <div class="container section-pad">
       <div class="section-header reveal"><h2 class="section-title">Projects</h2></div>
+      <!-- 프로젝트 이미지 교체: assets/projects/nrf-2026.png -->
       <div class="project-card reveal">
-        <div class="project-img"><img src="assets/papers/nrf-project.png" alt="NRF Project" loading="lazy" /></div>
+        <div class="project-img">
+          <img src="assets/projects/nrf-2026.png" alt="NRF Project" loading="lazy" />
+        </div>
         <div class="project-body">
           <div class="project-funder">한국연구재단 (NRF) — 우수신진연구</div>
           <div class="project-title">보행자 안전 강화를 위한 비전-언어모델 (VLM) 기반 추론형 자율 주행 지도 구축 기술 개발</div>
@@ -520,24 +667,111 @@
 
   <hr class="divider" />
 
-  <!-- GALLERY -->
-  <section id="gallery">
+  <!-- ═══ HONORS ═══
+       수상 내역 추가 방법:
+       1. 상장 이미지를 assets/honors/ 폴더에 저장 (예: award-YYYY-name.jpg)
+       2. 아래 honor-card 블록을 복사해서 src와 텍스트만 수정 -->
+  <section id="honors">
     <div class="container section-pad">
-      <div class="section-header reveal"><h2 class="section-title">Gallery</h2></div>
-      <div class="gallery-grid reveal">
-        <div class="gallery-item wide"><img src="assets/gallery/lab-photo.jpg" alt="VOID Lab Team" loading="lazy" /></div>
-        <div class="gallery-item"><img src="assets/gallery/award-1.jpg" alt="2026 경기도 자율주행 경진대회 우수상" loading="lazy" /></div>
-        <div class="gallery-item"><img src="assets/gallery/award-2.jpg" alt="G-RISE 지역 산업군 PoC 장려상" loading="lazy" /></div>
-        <div class="gallery-item"><img src="assets/papers/paper-2022-1.png" alt="Lane-level Road Marking Map" loading="lazy" /></div>
-        <div class="gallery-item"><img src="assets/papers/paper-2022-2.png" alt="3D LiDAR Scene Understanding" loading="lazy" /></div>
-        <div class="gallery-item"><img src="assets/papers/paper-2024.png" alt="Drivable Region Completion" loading="lazy" /></div>
+      <div class="section-header reveal">
+        <h2 class="section-title">Honors &amp; Awards</h2>
+        <p class="section-desc">Recognition received by VOID Lab members in competitions and research programs.</p>
+      </div>
+      <div class="honors-grid reveal">
+
+        <!-- 수상 카드 1 — 이미지: assets/honors/award-2026-autonomous.jpg -->
+        <div class="honor-card">
+          <div class="honor-img">
+            <img src="assets/honors/award-2026-autonomous.jpg" alt="2026 경기도 자율주행 경진대회 우수상" loading="lazy" />
+          </div>
+          <div class="honor-body">
+            <div class="honor-year">2026 · February</div>
+            <div class="honor-award">2026 경기도 대학생 자율주행 경진대회</div>
+            <div class="honor-award-badge gold">🏆 우수상 (차세대융합기술연구원장상)</div>
+            <div class="honor-event">재단법인 차세대융합기술연구원 주최<br/>경기도미래모빌리티센터</div>
+            <div class="honor-team"><strong>Team SEESAW</strong> — 김민수, 김미진, 조혜린, 이신비, 강도훈</div>
+          </div>
+        </div>
+
+        <!-- 수상 카드 2 — 이미지: assets/honors/award-2026-grise.jpg -->
+        <div class="honor-card">
+          <div class="honor-img">
+            <img src="assets/honors/award-2026-grise.jpg" alt="G-RISE 장려상" loading="lazy" />
+          </div>
+          <div class="honor-body">
+            <div class="honor-year">2026 · February</div>
+            <div class="honor-award">G-RISE 지역 산업군 PoC 우수과제 발표</div>
+            <div class="honor-award-badge bronze">🥉 장려상</div>
+            <div class="honor-event">한국외국어대학교 G-RISE 사업단 주최</div>
+            <div class="honor-team"><strong>Team Vision2Language</strong> — 노현두, 이신비, 조민채</div>
+          </div>
+        </div>
+
+        <!--
+        ★ 수상 추가 템플릿 ★
+        아래를 복사하고 내용 수정 후 honors-grid 안에 붙여넣기:
+
+        <div class="honor-card">
+          <div class="honor-img">
+            <img src="assets/honors/award-YYYY-name.jpg" alt="수상명" loading="lazy" />
+          </div>
+          <div class="honor-body">
+            <div class="honor-year">YYYY · Month</div>
+            <div class="honor-award">대회/행사명</div>
+            <div class="honor-award-badge gold">🏆 수상명</div>  ← gold / silver / bronze
+            <div class="honor-event">주최 기관</div>
+            <div class="honor-team"><strong>팀명</strong> — 멤버</div>
+          </div>
+        </div>
+        -->
+
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- CONTACT -->
+  <!-- ═══ GALLERY ═══
+       사진 추가 방법:
+       1. 이미지를 assets/gallery/ 폴더에 저장
+       2. 아래 gallery-item 블록을 복사해서 src만 수정
+       3. 넓은 사진은 class="gallery-item wide" 사용 -->
+  <section id="gallery">
+    <div class="container section-pad">
+      <div class="section-header reveal">
+        <h2 class="section-title">Gallery</h2>
+      </div>
+      <div class="gallery-grid reveal">
+        <!-- Row 1: 가로 단체사진 2장 (wide) -->
+        <div class="gallery-item wide">
+          <img src="assets/gallery/lab-photo.jpg" alt="VOID Lab Team 2025" loading="lazy" />
+        </div>
+        <div class="gallery-item">
+          <img src="assets/gallery/lab-photo1.jpg" alt="VOID Lab Dinner" loading="lazy" />
+        </div>
+        <!-- Row 2: 세로 사진 3장 -->
+        <div class="gallery-item portrait">
+          <img src="assets/gallery/lab-photo2.jpg" alt="2026 경기도 자율주행 경진대회 우수상" loading="lazy" />
+        </div>
+        <div class="gallery-item portrait">
+          <img src="assets/gallery/lab-photo3.jpg" alt="ICCAS 2025 Poster Presentation" loading="lazy" />
+        </div>
+        <div class="gallery-item portrait">
+          <img src="assets/gallery/lab-photo4.jpg" alt="2026 경기도 자율주행 경진대회 현장" loading="lazy" />
+        </div>
+        <!--
+        ★ 갤러리 사진 추가 템플릿 ★
+        가로 사진: <div class="gallery-item"><img src="assets/gallery/파일명.jpg" alt="설명" loading="lazy" /></div>
+        넓은 사진: <div class="gallery-item wide"><img ...></div>
+        세로 사진: <div class="gallery-item portrait"><img ...></div>
+        -->
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ═══ CONTACT ═══ -->
   <section id="contact">
     <div class="container section-pad">
       <div class="section-header reveal"><h2 class="section-title">Contact</h2></div>
@@ -560,7 +794,7 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ═══ FOOTER ═══ -->
   <footer>
     <span>ⓒ 2025 VOID Lab — Vehicle-Oriented Intelligence with Data Laboratory</span>
     <span>Hankuk University of Foreign Studies · AI Data Convergence</span>
