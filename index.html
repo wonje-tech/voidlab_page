@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VOID Lab — Vehicle-Oriented Intelligence with Data</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #17171f;
+      --border: rgba(255,255,255,0.07);
+      --border-bright: rgba(255,255,255,0.15);
+      --text: #e8e8f0;
+      --text-muted: #6b6b88;
+      --text-dim: #3a3a55;
+      --accent: #5b7fff;
+      --accent2: #a855f7;
+      --accent3: #22d3ee;
+      --accent-glow: rgba(91, 127, 255, 0.15);
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Plus Jakarta Sans', sans-serif;
+      --display: 'Bricolage Grotesque', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(10,10,15,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+      /* 배너 이미지가 흰 배경이므로 다크 테마에 맞게 반전 */
+      filter: invert(1) brightness(1.1);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover { color: var(--text); background: var(--surface2); }
+
+    /* nav-cta removed */
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 120px 48px 80px;
+      text-align: center;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(91,127,255,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(91,127,255,0.1);
+      border: 1px solid rgba(91,127,255,0.2);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+      display: inline-block;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-logo-wrap {
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero-logo-img {
+      height: clamp(140px, 18vw, 220px);
+      width: auto;
+      /* 로고_Color.png는 검정 배경 — mix-blend-mode로 배경 투과 */
+      mix-blend-mode: lighten;
+      filter: drop-shadow(0 0 40px rgba(91,127,255,0.25));
+    }
+
+    /* grad style removed — now using image logo */
+
+    .hero-sub {
+      font-size: 20px;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 48px;
+      font-weight: 400;
+      line-height: 1.65;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(91,127,255,0.3); }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 12px 24px;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      border: 1px solid var(--border-bright);
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text); border-color: var(--text-muted); }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface);
+      margin: 64px auto 0;
+      max-width: 700px;
+      width: 100%;
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+
+    .stat {
+      flex: 1;
+      padding: 24px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: var(--display);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    section { position: relative; z-index: 1; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .section-pad { padding: 120px 0; }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 64px;
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(36px, 4.5vw, 54px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      max-width: 480px;
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── NEWS SECTION ── */
+    #news { background: var(--surface); }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .news-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-item:hover { background: var(--surface2); }
+
+    .news-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .badge-project { background: rgba(91,127,255,0.12); color: var(--accent); border: 1px solid rgba(91,127,255,0.2); }
+    .badge-competition { background: rgba(168,85,247,0.12); color: #c084fc; border: 1px solid rgba(168,85,247,0.2); }
+    .badge-journal { background: rgba(34,211,238,0.12); color: var(--accent3); border: 1px solid rgba(34,211,238,0.2); }
+    .badge-conference { background: rgba(251,146,60,0.12); color: #fb923c; border: 1px solid rgba(251,146,60,0.2); }
+    .badge-welcome { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+
+    .news-text { font-size: 15px; color: var(--text-muted); line-height: 1.65; }
+    .news-text strong { color: var(--text); font-weight: 500; }
+    .news-text a { color: var(--accent); text-decoration: none; }
+    .news-text a:hover { text-decoration: underline; }
+
+    /* ── RESEARCH ── */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .research-card {
+      background: var(--surface);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .research-card:hover { background: var(--surface2); }
+    .research-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .research-card:hover::before { opacity: 1; }
+
+    .research-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .research-title {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .research-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* ── PUBLICATIONS ── */
+    #publications { background: var(--surface); }
+
+    .pub-tabs {
+      display: flex;
+      gap: 2px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 40px;
+      width: fit-content;
+    }
+
+    .pub-tab {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 8px 20px;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .pub-tab.active { background: var(--surface); color: var(--text); }
+
+    .pub-list { display: none; }
+    .pub-list.active { display: flex; flex-direction: column; gap: 0; }
+
+    .pub-item {
+      display: flex;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .pub-item:last-child { border-bottom: none; }
+
+    .pub-year {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      width: 40px;
+      flex-shrink: 0;
+      padding-top: 3px;
+      letter-spacing: 0.05em;
+    }
+
+    .pub-body { flex: 1; }
+
+    .pub-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 5px;
+      line-height: 1.5;
+    }
+
+    .pub-authors {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .pub-venue {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pub-venue-name {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent3);
+    }
+
+    .pub-if {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 2px 8px;
+      background: rgba(34,211,238,0.08);
+      border: 1px solid rgba(34,211,238,0.15);
+      color: var(--accent3);
+      border-radius: 100px;
+    }
+
+    .pub-doi {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .pub-doi:hover { text-decoration: underline; }
+
+    /* ── MEMBERS ── */
+    .pi-card {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface);
+      margin-bottom: 48px;
+    }
+
+    .pi-portrait {
+      background: linear-gradient(160deg, var(--surface2), #1a1a2e);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 40px 40px 0;
+      overflow: hidden;
+    }
+
+    .pi-avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--display);
+      font-size: 48px;
+      font-weight: 800;
+      color: white;
+      border: 3px solid rgba(255,255,255,0.1);
+    }
+
+    .pi-info {
+      padding: 40px;
+      border-left: 1px solid var(--border);
+    }
+
+    .pi-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .pi-name {
+      font-family: var(--display);
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 4px;
+    }
+
+    .pi-email {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 32px;
+      display: block;
+    }
+    .pi-email:hover { color: var(--accent); }
+
+    .pi-section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .pi-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .pi-timeline-item {
+      display: flex;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .pi-timeline-year {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .member-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.25s;
+      cursor: default;
+    }
+    .member-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .member-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .member-name {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+
+    .member-name-kr {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .member-major {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .member-fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .field-tag {
+      font-family: var(--mono);
+      font-size: 9px;
+      padding: 2px 7px;
+      background: rgba(91,127,255,0.08);
+      border: 1px solid rgba(91,127,255,0.15);
+      color: var(--accent);
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+    }
+
+    .member-type-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin: 40px 0 16px;
+    }
+
+    /* ── PROJECTS ── */
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(91,127,255,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .project-funder {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent3);
+      margin-bottom: 16px;
+    }
+
+    .project-title {
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .project-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .project-meta-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .project-meta-value {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--surface); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .contact-block {
+      background: var(--surface);
+      padding: 48px;
+    }
+    .contact-block:first-child { border-right: 1px solid var(--border); }
+
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .contact-value {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .contact-value a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .contact-value a:hover { text-decoration: underline; }
+
+    .contact-title {
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    /* ── RECRUITING ── */
+    .recruiting-banner {
+      background: linear-gradient(135deg, rgba(91,127,255,0.12), rgba(168,85,247,0.08));
+      border: 1px solid rgba(91,127,255,0.2);
+      border-radius: 16px;
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      margin-top: 64px;
+    }
+
+    .recruiting-text h3 {
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .recruiting-text p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      #home { padding: 100px 20px 60px; }
+      .container { padding: 0 20px; }
+      .section-pad { padding: 80px 0; }
+      .pi-card { grid-template-columns: 1fr; }
+      .pi-portrait { padding: 40px; }
+      .pi-info { border-left: none; border-top: 1px solid var(--border); }
+      .research-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-block:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .stats-row { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+      .recruiting-banner { flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">
+      <img src="assets/logo-banner.png" alt="VOID Lab" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#news">News</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#members">Members</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-glow"></div>
+    <div class="hero-tag">@ HUFS — AI Data Convergence Division</div>
+    <div class="hero-logo-wrap">
+      <img src="assets/logo-color.png" alt="VOID Lab" class="hero-logo-img" />
+    </div>
+    <p class="hero-sub">
+      Vehicle-Oriented Intelligence with Data.<br/>
+      We fill the void in autonomous driving research.
+    </p>
+    <div class="hero-actions">
+      <a href="#research" class="btn-primary">Explore Research</a>
+      <a href="#publications" class="btn-ghost">Publications</a>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Journal Papers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Int'l Conferences</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">₩280M</div>
+        <div class="stat-label">Research Funding</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2025</div>
+        <div class="stat-label">NRF Excellence Award</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section id="news">
+    <div class="container section-pad">
+      <div class="section-header reveal">
+        <h2 class="section-title">News &amp; Highlights</h2>
+      </div>
+      <div class="news-grid reveal">
+        <div class="news-item">
+          <span class="news-badge badge-project">Project</span>
+          <span class="news-text">
+            <strong>NRF 우수신진연구 선정</strong> — 보행자 안전 강화를 위한 VLM 기반 추론형 자율 주행 지도 구축 기술 개발 과제 선정 (총 연구비 2.8억, 26.3–29.2)
+          </span>
+        </div>
+        <div class="news-item">
+          <span class="news-badge badge-competition">Award</span>
+          <span class="news-text">
+            <strong>Team SEESAW</strong> — 2026 경기도 자율주행 경진대회 <strong>우수상</strong> (차세대융합기술연구원장상) 수상
+          </span>
+        </div>
+        <div class="news-item">
+          <span class="news-badge badge-competition">Award</span>
+          <span class="news-text">
+            <strong>Team Vision2Language</strong> — G-RISE 지역 산업군 PoC 과제 발표 <strong>장려상</strong> 수상
+          </span>
+        </div>
+        <div class="news-item">
+          <span class="news-badge badge-journal">Journal</span>
+          <span class="news-text">
+            "Latent Diffusion-Based Pedestrian Attention Estimation for Autonomous Driving" accepted in
+            <strong>IJCAS</strong> (SCIE Q2, IF=2.9)
+          </span>
+        </div>
+        <div class="news-item">
+          <span class="news-badge badge-conference">Conference</span>
+          <span class="news-text">
+            "Pedestrian Attention Estimation via Latent Diffusion for Safe Driving" accepted at
+            <strong>ICCAS 2025</strong>
+          </span>
+        </div>
+        <div class="news-item">
+          <span class="news-badge badge-conference">Conference</span>
+          <span class="news-text">
+            "자율 주행 모빌리티의 충돌 방지를 위한 보행자 관심 판단 모듈" accepted at
+            <strong>ICROS 2025</strong>
+          </span>
+        </div>
+        <div class="news-item">
+          <span class="news-badge badge-competition">Award</span>
+          <span class="news-text">
+            <strong>김이안</strong> — 디지털 헬스케어 해커톤 대회 <strong>최우수상</strong> 수상
+          </span>
+        </div>
+        <div class="news-item">
+          <span class="news-badge badge-welcome">Welcome</span>
+          <span class="news-text">
+            <strong>SeungJae Lee</strong> joined VOID Lab (2026.03.03)
+          </span>
+        </div>
+        <div class="news-item">
+          <span class="news-badge badge-welcome">Welcome</span>
+          <span class="news-text">
+            <strong>HyeonDoo Roh</strong> joined VOID Lab (2025.10.14)
+          </span>
+        </div>
+        <div class="news-item">
+          <span class="news-badge badge-welcome">Welcome</span>
+          <span class="news-text">
+            <strong>Shinbi Lee</strong> &amp; <strong>Dohun Kang</strong> joined VOID Lab (2025.07.01)
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="container section-pad">
+      <div class="section-header reveal">
+        <h2 class="section-title">Research Areas</h2>
+        <p class="section-desc">Our lab focuses on building AI systems for next-generation autonomous mobility.</p>
+      </div>
+      <div class="research-grid reveal">
+        <div class="research-card">
+          <div class="research-icon">🚗</div>
+          <h3 class="research-title">Autonomous Driving Systems</h3>
+          <p class="research-desc">End-to-end intelligent systems for smart mobility — from perception to planning and decision-making in complex real-world environments.</p>
+        </div>
+        <div class="research-card">
+          <div class="research-icon">👁️</div>
+          <h3 class="research-title">2D & 3D Computer Vision</h3>
+          <p class="research-desc">Deep learning-based scene understanding, object detection, tracking, and semantic segmentation for both camera and LiDAR modalities.</p>
+        </div>
+        <div class="research-card">
+          <div class="research-icon">📡</div>
+          <h3 class="research-title">Multi-modal Sensor Fusion</h3>
+          <p class="research-desc">Combining camera, LiDAR, and radar data to build robust, weather-resilient perception pipelines for autonomous vehicles.</p>
+        </div>
+        <div class="research-card">
+          <div class="research-icon">🗺️</div>
+          <h3 class="research-title">HD Map & SLAM</h3>
+          <p class="research-desc">High-definition map construction, lane-level road marking mapping, simultaneous localization and mapping for precise autonomous navigation.</p>
+        </div>
+        <div class="research-card">
+          <div class="research-icon">🧠</div>
+          <h3 class="research-title">Vision-Language Models</h3>
+          <p class="research-desc">Leveraging VLM-based reasoning for enhanced autonomous driving map construction and pedestrian safety analysis.</p>
+        </div>
+        <div class="research-card">
+          <div class="research-icon">🔧</div>
+          <h3 class="research-title">Data Generation & Refinement</h3>
+          <p class="research-desc">Synthetic data generation using diffusion models and dataset curation pipelines to accelerate training of autonomous driving models.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="container section-pad">
+      <div class="section-header reveal">
+        <h2 class="section-title">Publications</h2>
+      </div>
+
+      <div class="reveal">
+        <div class="pub-tabs">
+          <button class="pub-tab active" onclick="switchTab('journal')">International Journal</button>
+          <button class="pub-tab" onclick="switchTab('intl-conf')">International Conference</button>
+          <button class="pub-tab" onclick="switchTab('domestic-conf')">Domestic Conference</button>
+        </div>
+
+        <!-- JOURNAL -->
+        <div id="tab-journal" class="pub-list active">
+          <div class="pub-item">
+            <div class="pub-year">2025</div>
+            <div class="pub-body">
+              <div class="pub-title">Latent Diffusion-based Pedestrian Attention Estimation for Autonomous Driving</div>
+              <div class="pub-authors">Ian Kim, Wonje Jang</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">International Journal of Control, Automation and Systems (IJCAS)</span>
+                <span class="pub-if">IF=2.9 · SCIE Q2</span>
+                <a href="https://doi.org/10.1007/s12555-025-0514-7" class="pub-doi" target="_blank">DOI →</a>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2024</div>
+            <div class="pub-body">
+              <div class="pub-title">Drivable Region Completion via a 3D LiDAR</div>
+              <div class="pub-authors">Wonje Jang, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">IEEE Transactions on Intelligent Transportation Systems</span>
+                <span class="pub-if">IF=9.5 · JCR Top 2.5%</span>
+                <a href="https://doi.org/10.1109/TITS.2024.3367130" class="pub-doi" target="_blank">DOI →</a>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2022</div>
+            <div class="pub-body">
+              <div class="pub-title">A Lane-Level Road Marking Map Using a Monocular Camera</div>
+              <div class="pub-authors">Wonje Jang, Junhyuk Hyun, Jhonghyun An, Minho Cho, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">IEEE/CAA Journal of Automatica Sinica</span>
+                <span class="pub-if">IF=19.2 · JCR Top 0.6%</span>
+                <a href="https://doi.org/10.1109/JAS.2021.1004293" class="pub-doi" target="_blank">DOI →</a>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2022</div>
+            <div class="pub-body">
+              <div class="pub-title">Real-Time Driving Scene Understanding via Efficient 3-D LIDAR Processing</div>
+              <div class="pub-authors">Wonje Jang, Minseong Park, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">IEEE Transactions on Instrumentation and Measurement</span>
+                <span class="pub-if">IF=5.6 · JCR Top 11.2%</span>
+                <a href="https://doi.org/10.1109/TIM.2022.3197771" class="pub-doi" target="_blank">DOI →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTL CONF -->
+        <div id="tab-intl-conf" class="pub-list">
+          <div class="pub-item">
+            <div class="pub-year">2025</div>
+            <div class="pub-body">
+              <div class="pub-title">Pedestrian Attention Estimation via Latent Diffusion for Safe Driving</div>
+              <div class="pub-authors">Ian Kim, Wonje Jang</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">ICCAS 2025 — 25th International Conference on Control, Automation, and Systems</span>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2022</div>
+            <div class="pub-body">
+              <div class="pub-title">Efficient Sensor Fusion using Transformer</div>
+              <div class="pub-authors">Junhyuk Jang, Wonje Jang, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">ASCC 2022 — 13th Asian Control Conference, Jeju</span>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2022</div>
+            <div class="pub-body">
+              <div class="pub-title">Graph-Based Point Tracker for 3D Object Tracking in Point Clouds</div>
+              <div class="pub-authors">Minseong Park, Hongje Seong, Wonje Jang, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">AAAI 2022 — 36th AAAI Conference on Artificial Intelligence, Vancouver</span>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2021</div>
+            <div class="pub-body">
+              <div class="pub-title">The Effective Method for 3D LiDAR Point Clouds Processing</div>
+              <div class="pub-authors">Youngjoo Kim, Hongje Seong, Wonje Jang, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">UR 2021 — 18th International Conference on Ubiquitous Robots, Gangneung</span>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2018</div>
+            <div class="pub-body">
+              <div class="pub-title">Object Classification of Laser Scanner by Using Recurrent Neural Network</div>
+              <div class="pub-authors">Minho Cho, Jhonghyun An, Wonje Jang, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">IEEE TENCON 2018, Jeju</span>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2018</div>
+            <div class="pub-body">
+              <div class="pub-title">Road Lane Semantic Segmentation for High Definition Map</div>
+              <div class="pub-authors">Wonje Jang, Jhonghyun An, Sangyun Lee, Minho Cho, Myungki Sun, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">IEEE IV 2018 — Intelligent Vehicle Symposium, Changshu</span>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2017</div>
+            <div class="pub-body">
+              <div class="pub-title">Real Time Road Lane Detection for Outdoor Autonomous Navigation of Mobile Robot</div>
+              <div class="pub-authors">Wonje Jang, Jhonghyun An, Minho Cho, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">ICCAS 2017</span>
+              </div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2016</div>
+            <div class="pub-body">
+              <div class="pub-title">Histogram-Model Based Road Boundary Estimation by Using Laser Scanner</div>
+              <div class="pub-authors">Minho Cho, Jhonghyun An, Wonje Jang, Euntai Kim</div>
+              <div class="pub-venue">
+                <span class="pub-venue-name">ICCAS 2016</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOMESTIC CONF -->
+        <div id="tab-domestic-conf" class="pub-list">
+          <div class="pub-item">
+            <div class="pub-year">2025</div>
+            <div class="pub-body">
+              <div class="pub-title">자율 주행 모빌리티의 충돌 방지를 위한 보행자 관심 판단 모듈</div>
+              <div class="pub-authors">김이안, 장원제</div>
+              <div class="pub-venue"><span class="pub-venue-name">ICROS 2025 — 제40회 제어로봇시스템학회 학술대회, 6월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2021</div>
+            <div class="pub-body">
+              <div class="pub-title">악천후 상황이 라이다 센서에 미치는 영향 연구</div>
+              <div class="pub-authors">김영주, 장원제, 이건용, 장형준, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">한국자동차공학회 춘계학술대회, 6월 2021</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2020</div>
+            <div class="pub-body">
+              <div class="pub-title">자율 주행차의 라이다 센서를 위한 Blockage 검출</div>
+              <div class="pub-authors">이충면, 장원제, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">CICS 2020, 제주, 10월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2020</div>
+            <div class="pub-body">
+              <div class="pub-title">LSTM 기반의 다중 차량 경로 예측 네트워크</div>
+              <div class="pub-authors">김수연, 장원제, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">ICROS 2020, 고성, 7월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2019</div>
+            <div class="pub-body">
+              <div class="pub-title">SLAM 모듈을 위한 레이저 스캐너 센서 불필요 데이터 제거</div>
+              <div class="pub-authors">장원제, 조해민, 이성원, 우수한, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">IPIU 2019, 제주, 2월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2019</div>
+            <div class="pub-body">
+              <div class="pub-title">레이저 스캐너를 이용한 박스 형태 기반 이동로봇 검출 및 추적</div>
+              <div class="pub-authors">안종현, 조민호, 장원제, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">제14회 한국로봇종합학술대회, 평창, 1월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2018</div>
+            <div class="pub-body">
+              <div class="pub-title">딥러닝을 이용한 도로 차선 검출 알고리즘</div>
+              <div class="pub-authors">안종현, 장원제, 조민호, 조형기, 조해민, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">제13회 한국로봇종합학술대회, 횡성, 1월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2018</div>
+            <div class="pub-body">
+              <div class="pub-title">딥러닝을 이용한 차선 추출 방법</div>
+              <div class="pub-authors">조민호, 안종현, 장원제, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">한국지능시스템학회 추계학술대회, 원주, 10월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2017</div>
+            <div class="pub-body">
+              <div class="pub-title">영상기반 보행자 검출을 위한 BING을 이용한 보행자 후보군 제안</div>
+              <div class="pub-authors">백정현, 장원제, 윤창용, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">한국지능시스템학회 추계학술대회, 여수, 11월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2017</div>
+            <div class="pub-body">
+              <div class="pub-title">Markov Decision Process를 이용한 차량의 경로 계획</div>
+              <div class="pub-authors">조민호, 안종현, 장원제, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">제12회 한국로봇종합학술대회, 평창, 2월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2017</div>
+            <div class="pub-body">
+              <div class="pub-title">2차원 레이저 스캐너를 이용한 연석 검출 알고리즘</div>
+              <div class="pub-authors">안종현, 조민호, 장원제, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">제12회 한국로봇종합학술대회, 평창, 2월</span></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2016</div>
+            <div class="pub-body">
+              <div class="pub-title">이동 로봇의 자율 주행을 위한 사람 인식 알고리즘</div>
+              <div class="pub-authors">장원제, 최배훈, 안종현, 조민호, 김은태</div>
+              <div class="pub-venue"><span class="pub-venue-name">제11회 한국로봇종합학술대회, 평창, 1월</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- MEMBERS -->
+  <section id="members">
+    <div class="container section-pad">
+      <div class="section-header reveal">
+        <h2 class="section-title">Members</h2>
+      </div>
+
+      <!-- PI -->
+      <div class="pi-card reveal">
+        <div class="pi-portrait">
+          <div class="pi-avatar">WJ</div>
+        </div>
+        <div class="pi-info">
+          <div class="pi-role">Principal Investigator</div>
+          <div class="pi-name">Won Je Jang</div>
+          <a href="mailto:wonje@hufs.ac.kr" class="pi-email">wonje@hufs.ac.kr</a>
+
+          <div class="pi-section-label">Education</div>
+          <div class="pi-timeline">
+            <div class="pi-timeline-item">
+              <span class="pi-timeline-year">2015–2022</span>
+              <span>Ph.D., Electrical & Electronic Engineering, Yonsei University</span>
+            </div>
+            <div class="pi-timeline-item">
+              <span class="pi-timeline-year">2011–2015</span>
+              <span>B.S., Electrical & Electronic Engineering, Yonsei University</span>
+            </div>
+          </div>
+
+          <div class="pi-section-label">Career</div>
+          <div class="pi-timeline">
+            <div class="pi-timeline-item">
+              <span class="pi-timeline-year">2025 –</span>
+              <span>Assistant Professor, Division of AI Data Convergence, HUFS</span>
+            </div>
+            <div class="pi-timeline-item">
+              <span class="pi-timeline-year">2023–2025</span>
+              <span>Senior Research Engineer, Hyundai Motor Company</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Undergraduate -->
+      <div class="reveal">
+        <div class="member-type-label">Undergraduate Internship</div>
+        <div class="members-grid">
+          <div class="member-card">
+            <div class="member-avatar">KI</div>
+            <div class="member-name">Kim Ian</div>
+            <div class="member-name-kr">김이안</div>
+            <div class="member-major">Computer Science</div>
+            <div class="member-fields">
+              <span class="field-tag">Computer Vision</span>
+              <span class="field-tag">Infotainment</span>
+            </div>
+          </div>
+          <div class="member-card">
+            <div class="member-avatar">KD</div>
+            <div class="member-name">Kang Dohun</div>
+            <div class="member-name-kr">강도훈</div>
+            <div class="member-major">Computer Science</div>
+            <div class="member-fields">
+              <span class="field-tag">Computer Vision</span>
+              <span class="field-tag">SLAM</span>
+              <span class="field-tag">Robotics</span>
+            </div>
+          </div>
+          <div class="member-card">
+            <div class="member-avatar">LS</div>
+            <div class="member-name">Lee Shinbi</div>
+            <div class="member-name-kr">이신비</div>
+            <div class="member-major">Computer Science</div>
+            <div class="member-fields">
+              <span class="field-tag">Computer Vision</span>
+              <span class="field-tag">Sensor Fusion</span>
+              <span class="field-tag">Tracking</span>
+            </div>
+          </div>
+          <div class="member-card">
+            <div class="member-avatar">RH</div>
+            <div class="member-name">Roh Hyeondoo</div>
+            <div class="member-name-kr">노현두</div>
+            <div class="member-major">Computer Science</div>
+            <div class="member-fields">
+              <span class="field-tag">HD Map</span>
+              <span class="field-tag">Vector Map</span>
+            </div>
+          </div>
+          <div class="member-card">
+            <div class="member-avatar">LS</div>
+            <div class="member-name">Lee SeungJae</div>
+            <div class="member-name-kr">이승재</div>
+            <div class="member-major">AI Data Convergence</div>
+            <div class="member-fields">
+              <span class="field-tag">HD Map</span>
+              <span class="field-tag">Vector Map</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recruiting -->
+      <div class="recruiting-banner reveal">
+        <div class="recruiting-text">
+          <h3>We're Recruiting 🚀</h3>
+          <p>현재 석사 과정 및 석박통합 과정 신입생을 모집 중입니다.<br/>자율주행 AI에 열정이 있는 분이라면 연락주세요!</p>
+        </div>
+        <a href="mailto:wonje@hufs.ac.kr" class="btn-primary">Contact PI →</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container section-pad">
+      <div class="section-header reveal">
+        <h2 class="section-title">Projects</h2>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-funder">한국연구재단 (NRF) — 우수신진연구</div>
+        <div class="project-title">보행자 안전 강화를 위한 비전-언어모델 (VLM) 기반<br/>추론형 자율 주행 지도 구축 기술 개발</div>
+        <div class="project-meta">
+          <div class="project-meta-item">
+            <span class="project-meta-label">기간</span>
+            <span class="project-meta-value">2026.03.01 – 2029.02.28</span>
+          </div>
+          <div class="project-meta-item">
+            <span class="project-meta-label">총 연구비</span>
+            <span class="project-meta-value">₩280,000,000</span>
+          </div>
+          <div class="project-meta-item">
+            <span class="project-meta-label">주관 기관</span>
+            <span class="project-meta-value">한국외국어대학교</span>
+          </div>
+          <div class="project-meta-item">
+            <span class="project-meta-label">연구 책임자</span>
+            <span class="project-meta-value">장원제 교수</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container section-pad">
+      <div class="section-header reveal">
+        <h2 class="section-title">Contact</h2>
+      </div>
+      <div class="contact-grid reveal">
+        <div class="contact-block">
+          <div class="contact-title">VOID Lab</div>
+          <div class="contact-label">Address (Korean)</div>
+          <div class="contact-value" style="margin-bottom:24px;">
+            (17035) 경기도 용인시 처인구 모현읍 외대로 81<br/>
+            한국외국어대학교 AI데이터융합학부
+          </div>
+          <div class="contact-label">Address (English)</div>
+          <div class="contact-value">
+            81 Oedae-ro, Mohyeon-eup, Cheoin-gu,<br/>
+            Yongin-si, Gyeonggi-do 17035, Korea
+          </div>
+        </div>
+        <div class="contact-block">
+          <div class="contact-title">Get In Touch</div>
+          <div class="contact-label">Principal Investigator</div>
+          <div class="contact-value" style="margin-bottom:24px;">
+            Prof. Won Je Jang<br/>
+            <a href="mailto:wonje@hufs.ac.kr">wonje@hufs.ac.kr</a>
+          </div>
+          <div class="contact-label">Recruitment</div>
+          <div class="contact-value">
+            We are actively recruiting Master's and integrated Master's–PhD students.<br/>
+            <a href="mailto:wonje@hufs.ac.kr">Send your CV →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>ⓒ 2025 VOID Lab — Vehicle-Oriented Intelligence with Data Laboratory</span>
+    <span>Hankuk University of Foreign Studies · AI Data Convergence</span>
+  </footer>
+
+  <script>
+    // Tab switching for publications
+    function switchTab(id) {
+      document.querySelectorAll('.pub-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.pub-list').forEach(l => l.classList.remove('active'));
+      document.getElementById('tab-' + id).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
